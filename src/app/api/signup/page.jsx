@@ -21,6 +21,15 @@ export default function SignUpPage() {
             headquartersAddress
           }
           console.log(formData);
+          try{fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })}catch(e){
+            console.log(e);
+          }
 
         }}>
         <input type="text" name="name" placeholder="Name" />
