@@ -5,7 +5,6 @@ function handleLogin() {}
 
 export default function LoginPage() {
   return (
-    <body className="">
       <div
         className="
         flex flex-col justify-center items-center h-screen bg-gradient-to-b from-black via-blue-200 to-white"
@@ -67,7 +66,6 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
-    </body>
   );
 }
 
