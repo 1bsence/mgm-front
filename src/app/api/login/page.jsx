@@ -5,17 +5,18 @@ function handleLogin() {}
 
 export default function LoginPage() {
   return (
-      <div
-        className="
-        flex flex-col justify-center items-center h-screen bg-gradient-to-b from-black via-blue-200 to-white"
-      >
-        <div className="flex flex-col justify-center items-center space-y-5">
-          <Image src={logoImg} alt="logo" width={100} height={100} />
-          <h3 className="text-2x2 font-bold text-white">Return of MGM</h3>
+    <div className="bg-white h-screen w-screen flex items-center justify-center">
+      <div className="bg-white h-60 rounded-lg shadow-lg">
+        <div className="rounded-md flex flex-col justify-center">
+          <div className="flex justify-center">
+            <Image src={logoImg} alt="logo" width={50} height={50} />
+          </div>
+          <h3 className="flex justify-center">Return of MGM</h3>
         </div>
+
         <div>
           <form
-            className="flex flex-col justify-center items-center space-y-5"
+            className="flex flex-col justify-center items-center space-y-2 p-4 h-full w-full "
             onSubmit={
               (handleLogin = (e) => {
                 e.preventDefault();
@@ -27,7 +28,7 @@ export default function LoginPage() {
                 };
                 console.log(formData);
                 try {
-                  fetch("/api/login", {
+                  fetch("https://5bgmxcmd-3000.euw.devtunnels.ms/api/login", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -41,24 +42,19 @@ export default function LoginPage() {
             }
           >
             <input
-              className="
-              p-2 rounded-md"
+              className="rounded-md shadow-md hover:shadow-inner"
               type="email"
               name="email"
-              placeholder="E-mail"
+              placeholder="Email"
             />
             <input
-              className="
-              p-2 rounded-md
-            "
+              className="rounded-md shadow-md hover:shadow-inner"
               type="password"
               name="password"
               placeholder="Password"
             />
             <button
-              className="
-              p-2 rounded-md bg-blue-400 text-white
-            "
+              className="rounded-md w-20 shadow-lg  h-8 hover:shadow-inner"
               type="submit"
             >
               Login
@@ -66,33 +62,6 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
+    </div>
   );
-}
-
-{
-  /* <h1>Login</h1>
-            <form onSubmit={handleLogin = (e) =>{
-            e.preventDefault();
-            const email = e.target.elements.email.value;
-            const password = e.target.elements.password.value;
-            const formData = {
-              email,
-              password
-            }
-          console.log(formData);
-          try{
-            fetch('/api/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData)
-          })}catch(e){
-            console.log(e);
-          }
-        }}>
-                <input type="email" name="email" placeholder="E-mail" />
-                <input type="password" name="password" placeholder="Password" />
-                <button type="submit">Login</button>
-            </form> */
 }
