@@ -31,7 +31,7 @@ export default function SignUpPage() {
               };
               console.log(formData);
               try {
-                fetch("http://192.168.1.185:3030/api/signup", {
+                fetch("http://192.168.1.185:3030/api/e_signup", {
                   method: "POST",
                   mode: "no-cors", // Dont enable CORS
                   headers: {
