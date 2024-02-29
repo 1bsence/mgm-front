@@ -9,7 +9,7 @@ export default function SignUpPage() {
       <div className="bg-white h-100 rounded-lg shadow-lg">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
-            <Image src={logoImg} alt="logo" width={60} height={60} />
+            <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
           <h3 className="flex justify-center">Return of MGM</h3>
         </div>
@@ -22,6 +22,9 @@ export default function SignUpPage() {
               const name = e.target.elements.name.value;
               const email = e.target.elements.email.value;
               const password = e.target.elements.password.value;
+              const organizationName = e.target.elements.name.value;
+              const headquartersAddress =
+                e.target.elements.headquartersAddress.value;
               const formData = {
                 name,
                 email,
@@ -31,7 +34,7 @@ export default function SignUpPage() {
               };
               console.log(formData);
               try {
-                fetch("http://192.168.1.185:3030/api/e_signup", {
+                fetch("http://localhost:3030/api/signup", {
                   method: "POST",
                   mode: "no-cors", // Dont enable CORS
                   headers: {
@@ -39,10 +42,7 @@ export default function SignUpPage() {
                     "Access-Control-Allow-Origin": "*", // @dev First, read about security
                   },
                   body: JSON.stringify(formData),
-                })
-                  .then((response) => response.json())
-                  .then((json) => console.log(json))
-                  .catch((error) => console.error(error));
+                }).catch((error) => console.error(error));
               } catch (error) {
                 console.error(error);
               }
@@ -73,6 +73,18 @@ export default function SignUpPage() {
             name="pass2word"
             placeholder="Repeat Password"
           />
+          <input
+            className="rounded-md shadow-md hover:shadow-inner"
+            type="text"
+            name="organizationName"
+            placeholder="Organization Name"
+          />
+          <input
+            className="rounded-md shadow-md hover:shadow-inner"
+            type="text"
+            name="headquartersAddress"
+            placeholder="Headquarter Address"
+          />
           <button
             className="rounded-md w-20 shadow-lg h-8 hover:shadow-inner"
             type="submit"
@@ -83,5 +95,4 @@ export default function SignUpPage() {
       </div>
     </div>
   );
-} 
-
+}
