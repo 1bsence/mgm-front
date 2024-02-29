@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logoImg from "../../../../public/logo-black-removebg-preview.png";
+import logoImg from "@/public/logo-black-removebg-preview.png";
 function handleLogin() {}
 
 export default function LoginPage() {

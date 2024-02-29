@@ -22,9 +22,6 @@ export default function SignUpPage() {
               const name = e.target.elements.name.value;
               const email = e.target.elements.email.value;
               const password = e.target.elements.password.value;
-              const organizationName = e.target.elements.name.value;
-              const headquartersAddress =
-                e.target.elements.headquartersAddress.value;
               const formData = {
                 name,
                 email,
@@ -75,18 +72,6 @@ export default function SignUpPage() {
             type="password"
             name="pass2word"
             placeholder="Repeat Password"
-          />
-          <input
-            className="rounded-md shadow-md hover:shadow-inner"
-            type="text"
-            name="organizationName"
-            placeholder="Organization Name"
-          />
-          <input
-            className="rounded-md shadow-md hover:shadow-inner"
-            type="text"
-            name="headquartersAddress"
-            placeholder="Headquarter Address"
           />
           <button
             className="rounded-md w-20 shadow-lg h-8 hover:shadow-inner"
