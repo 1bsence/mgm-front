@@ -3,7 +3,7 @@ import Image from "next/image";
 import logoImg from "@/public/logo-black-removebg-preview.png";
 function handleSignUp() {}
 
-const organizationName = "Padrino SRL";
+const OrganizationId = "a5e4bf63-b31f-42c6-9f71-869ca4e8f566";
 
 export default function EmployeeSignUpPage() {
   return (
@@ -13,7 +13,9 @@ export default function EmployeeSignUpPage() {
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
-          <h3 className="flex justify-center">Organization: {organizationName}</h3>
+          <h3 className="flex justify-center">
+            Organization: {OrganizationId}
+          </h3>
         </div>
 
         <form
@@ -24,25 +26,36 @@ export default function EmployeeSignUpPage() {
               const name = e.target.elements.name.value;
               const email = e.target.elements.email.value;
               const password = e.target.elements.password.value;
-              const formData = {
-                name,
-                email,
-                password,
-              };
-              console.log(formData);
-              try {
-                fetch("http://localhost:3030/api/signup", {
+
+              const formData = { employee: { name, email, password } };
+              const req = fetch(
+                `http://localhost:3030/signup/${OrganizationId}`,
+                {
                   method: "POST",
-                  mode: "no-cors", // Dont enable CORS
                   headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*", // @dev First, read about security
+                    accept: "application/json",
                   },
                   body: JSON.stringify(formData),
-                }).catch((error) => console.error(error));
-              } catch (error) {
-                console.error(error);
-              }
+                }
+              ).catch((error) => console.error(error));
+              req.then((res) => {
+                if (res.ok) {
+                  console.log(
+                    "User created successfully",
+                    res.status,
+                    res.statusText
+                  );
+                  res.json().then((data) => {
+                    console.log(data);
+                  });
+                } else {
+                  console.error(
+                    "User creation failed",
+                    res.status,
+                    res.statusText
+                  );
+                }
+              });
             })
           }
         >
