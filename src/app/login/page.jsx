@@ -1,35 +1,38 @@
 "use client";
 
-
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoImg from "@/public/logo-black-removebg-preview.png";
-function handleSignUp() {}
+
 export default function Login() {
-  // Get the value from local storage if it exists
-  if (typeof window !== "undefined") {
+  function handleSignUp() {}
+  function getFromLocalStorage() {
     var userEmailVal = localStorage.getItem("userEmail") || "";
     var userPasswordVal = localStorage.getItem("userPassword") || "";
+    console.log(userEmailVal);
+    console.log(userPasswordVal);
   }
+  function saveToLocalStorage(object) {
+    localStorage.setItem("userEmail", object.email);
+    localStorage.setItem("userPassword", object.password);
+    console.log("Data saved to local storage");
+    console.log(localStorage.getItem("userEmail"));
+    console.log(localStorage.getItem("userPassword"));
+  }
+  function deleteFromLocalStorage() {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userPassword");
+    console.log(localStorage.getItem("userEmail"));
+    console.log(localStorage.getItem("userPassword"));
+  }
+  // const getFromLocalStorage = () => {};
+  // const saveToLocalStorage = () => {};
+  var userEmailVal = "";
+  var userPasswordVal = "";
+  // Get the value from local storage if it exists
   // Set the value received from the local storage to a local state
   const [userEmail, setUserEmail] = useState(userEmailVal);
   const [userPassword, setUserPassword] = useState(userPasswordVal);
-
-  // When user submits the form, save the favorite number to the local storage
-  function saveToLocalStorage(object) {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("userEmail", object.email);
-      localStorage.setItem("userPassword", object.password);
-    }
-  }
-  function deleteFromLocalStorage() {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userPassword");
-      console.log(localStorage.getItem("userEmail"));
-      console.log(localStorage.getItem("userPassword"));
-    }
-  }
 
   return (
     <div className="bg-white h-screen w-screen flex items-center justify-center">
@@ -51,23 +54,28 @@ export default function Login() {
                 email,
                 password,
               };
-              console.log(formData);
-              const data = fetch("http://localhost:3030/id", {
-                method: "GET",
-                mode: "no-cors", // Dont enable CORS
+              const data = fetch("http://localhost:3030/seecon", {
+                method: "POST", // Dont enable CORS
                 headers: {
-                  "Content-Type": "application/json",
-                  "Access-Control-Allow-Origin": "*", // @dev First, read about security
+                  accept: "application/json",
                 },
-              }).catch((error) => console.error(error));
-              if (data) {
-                console.log("Data received");
-                console.log(data);
-                saveToLocalStorage(formData);
-                console.log("Data saved to local storage");
-                console.log(localStorage.getItem("userEmail"));
-                console.log(localStorage.getItem("userPassword"));
-              }
+                body: JSON.stringify({ id: "Organizations" }),
+              }).catch(function (error) {
+                console.log(
+                  "There was a problem with the fetch operation: " +
+                    error.message
+                );
+              });
+              data.then((response) => {
+                if (response.ok) {
+                  console.log("Response is ok");
+                  response.json().then((data) => {
+                    console.log(data);
+                  });
+                } else {
+                  console.log("Response is not ok");
+                }
+              });
             })
           }
         >

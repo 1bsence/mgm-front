@@ -1,6 +1,12 @@
 {
-    "id":{
-        "email":"ceva@gmail.com",
-        "password":"123"
-    }
+    "id": [
+        {
+            "email":"ceva@gmail.com",
+            "password":"123"
+        },
+        {
+            "email":"ceva2@gmail.com",
+            "password":"123"
+        }
+    ]
 }

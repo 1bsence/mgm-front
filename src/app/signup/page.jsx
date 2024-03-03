@@ -22,27 +22,35 @@ export default function SignUpPage() {
               const name = e.target.elements.name.value;
               const email = e.target.elements.email.value;
               const password = e.target.elements.password.value;
-              const organizationName = e.target.elements.name.value;
-              const headquartersAddress =
+              const organization_name =
+                e.target.elements.organizationName.value;
+              const organization_address =
                 e.target.elements.headquartersAddress.value;
-              const formData = {
+              const employee = {
                 name,
                 email,
                 password,
-                organizationName,
-                headquartersAddress,
               };
-              console.log(formData);
+              const organization = {
+                organization_name,
+                organization_address,
+              };
+              console.log(organization, employee);
+              console.log(JSON.stringify({ organization, employee }));
               try {
-                fetch("http://localhost:3030/api/signup", {
+                fetch("http://localhost:3030/signup", {
                   method: "POST",
                   mode: "no-cors", // Dont enable CORS
                   headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*", // @dev First, read about security
                   },
-                  body: JSON.stringify(formData),
-                }).catch((error) => console.error(error));
+                  body: JSON.stringify({ organization, employee }),
+                })
+                  .catch((error) => console.error(error))
+                  .then((response) => {
+                    console.log(response);
+                  });
               } catch (error) {
                 console.error(error);
               }
