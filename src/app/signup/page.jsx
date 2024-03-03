@@ -37,23 +37,31 @@ export default function SignUpPage() {
               };
               console.log(organization, employee);
               console.log(JSON.stringify({ organization, employee }));
-              try {
-                fetch("http://localhost:3030/signup", {
-                  method: "POST",
-                  mode: "no-cors", // Dont enable CORS
+                const req = fetch("http://localhost:3030/signup", {
+                  method: "POST", // Dont enable CORS
                   headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*", // @dev First, read about security
+                    accept: "application/json",
                   },
                   body: JSON.stringify({ organization, employee }),
-                })
-                  .catch((error) => console.error(error))
-                  .then((response) => {
-                    console.log(response);
-                  });
-              } catch (error) {
-                console.error(error);
-              }
+                }).catch((error) => console.error(error));
+                req.then((res) => {
+                  if (res.ok) {
+                    console.log(
+                      "User created successfully",
+                      res.status,
+                      res.statusText
+                    );
+                    res.json().then((data) => {
+                      console.log(data);
+                    });
+                  } else {
+                    console.error(
+                      "User creation failed",
+                      res.status,
+                      res.statusText
+                    );
+                  }
+                });
             })
           }
         >
