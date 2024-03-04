@@ -33,7 +33,7 @@ export default function Login() {
                 email,
                 password,
               };
-              const data = fetch("http://localhost:3030/login", {
+              const data = fetch("http://atc-2024-mgm-be-linux-web-app.azurewebsites.net/login", {
                 method: "POST", // Dont enable CORS
                 headers: {
                   accept: "application/json",
