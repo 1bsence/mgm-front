@@ -9,7 +9,6 @@ export default function Home() {
     return userString ? JSON.parse(userString) : null;
   });
   useEffect(() => {
-    // Logic to determine if a redirect is needed
     if (!userData) {
       redirect("/login");
     }
@@ -31,17 +30,17 @@ export default function Home() {
       </>
     );
   }
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-3xl font-bold text-blue-600">Return of MGM</div>
-      <div>Profile Page</div>
-      //if user display user info
-      {user?.employee && (
-        <div>
-          <div>{user.employee.name}</div>
-          <div>{user.employee.email}</div>
-        </div>
-      )}
-    </div>
-  );
+  // return (
+  //   <div className="flex flex-col items-center justify-center h-screen">
+  //     <div className="text-3xl font-bold text-blue-600">Return of MGM</div>
+  //     <div>Profile Page</div>
+  //     //if user display user info
+  //     {user?.employee && (
+  //       <div>
+  //         <div>{user.employee.name}</div>
+  //         <div>{user.employee.email}</div>
+  //       </div>
+  //     )}
+  //   </div>
+  // );
 }
