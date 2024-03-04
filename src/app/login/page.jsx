@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import logoImg from "@/public/logo-black-removebg-preview.png";
+import { redirect } from "next/navigation";
 
 export default function Login() {
   function handleSignUp() {}
@@ -14,7 +15,6 @@ export default function Login() {
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
         </div>
-
         <form
           className="flex flex-col justify-center items-center space-y-2 p-4 h-full w-full "
           onSubmit={
@@ -41,12 +41,21 @@ export default function Login() {
               data.then((response) => {
                 if (response.ok) {
                   response.json().then((data) => {
-                    console.log(data, response.status, response.statusText);
+                    var user = {
+                      organization: data.organization,
+                      employee: data.employee,
+                    };
+                    localStorage.setItem("userData", JSON.stringify(user));
                   });
                 } else {
                   console.error(response.status, response.statusText);
                 }
               });
+              const userString = localStorage.getItem("userData");
+              const user = userString ? JSON.parse(userString) : null;
+              if (user) {
+                redirect("/");
+              }
             })
           }
         >

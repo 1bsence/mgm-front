@@ -1,11 +1,13 @@
 "use client";
 import Image from "next/image";
 import logoImg from "@/public/logo-black-removebg-preview.png";
+import { useState } from "react";
 function handleSignUp() {}
 
 const OrganizationId = "a5e4bf63-b31f-42c6-9f71-869ca4e8f566";
 
 export default function EmployeeSignUpPage() {
+  const [emailError, setEmailError] = useState(false);
   return (
     <div className="bg-white h-screen w-screen flex items-center justify-center">
       <div className="bg-white h-100 rounded-lg shadow-lg">
@@ -49,11 +51,14 @@ export default function EmployeeSignUpPage() {
                     console.log(data);
                   });
                 } else {
-                  console.error(
-                    "User creation failed",
-                    res.status,
-                    res.statusText
-                  );
+                  if (res.status === 409) {
+                    console.error(
+                      "User already exists with that email",
+                      res.status,
+                      res.statusText
+                    );
+                    setEmailError(true);
+                  }
                 }
               });
             })
@@ -65,6 +70,9 @@ export default function EmployeeSignUpPage() {
             name="name"
             placeholder="Name"
           />
+          {emailError && (
+            <h5 className="text-red-600">User exists with that email</h5>
+          )}
           <input
             className="rounded-md shadow-md hover:shadow-inner"
             type="email"
