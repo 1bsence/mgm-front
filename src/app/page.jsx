@@ -4,27 +4,24 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [userData, setUserData] = useState(() => {
-    const userString = localStorage.getItem("userData");
-    return userString ? JSON.parse(userString) : null;
-  });
+  const [loggedIn, setLoggedIn] = useState(JSON.parse(localStorage.getItem("userData")));
+  const [loggedOut, setLoggedOut] = useState(null);
   useEffect(() => {
-    if (!userData) {
-      redirect("/login");
+    console.log("LOGGED IN", loggedIn);
+    if (loggedOut) {
+      localStorage.removeItem("userData");
+      redirect("/api/auth/login");
     }
-  }, [userData]);
-  if (!userData) {
+  }, [loggedIn, loggedOut]);
+  if (!loggedIn) {
     return <>NO USER DATA</>;
   } else {
     return (
       <>
-        Welcome {JSON.stringify(userData)}
+        Welcome {JSON.stringify(loggedIn)}
         <button
           onClick={() => {
-            typeof window !== "undefined"
-              ? window.localStorage.removeItem("userData")
-              : false;
-            setUserData(null);
+            setLoggedOut(true);
           }}
         >
           DELETE USER
@@ -32,17 +29,4 @@ export default function Home() {
       </>
     );
   }
-  // return (
-  //   <div className="flex flex-col items-center justify-center h-screen">
-  //     <div className="text-3xl font-bold text-blue-600">Return of MGM</div>
-  //     <div>Profile Page</div>
-  //     //if user display user info
-  //     {user?.employee && (
-  //       <div>
-  //         <div>{user.employee.name}</div>
-  //         <div>{user.employee.email}</div>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 }

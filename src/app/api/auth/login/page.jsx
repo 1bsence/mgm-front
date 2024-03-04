@@ -6,10 +6,10 @@ import logoImg from "@/public/logo-black-removebg-preview.png";
 import { redirect } from "next/navigation";
 
 export default function Login() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(null);
   useEffect(() => {
     if (loggedIn) {
-      redirect("/");
+      localStorage.setItem("userData", JSON.stringify(loggedIn));
     }
   }, [loggedIn]);
 
@@ -52,13 +52,7 @@ export default function Login() {
                       organization: data.organization,
                       employee: data.employee,
                     };
-                    typeof window !== "undefined"
-                      ? window.localStorage.setItem(
-                          "userData",
-                          JSON.stringify(user)
-                        )
-                      : false;
-                    setLoggedIn(true);
+                    setLoggedIn(user);
                   });
                 } else {
                   console.error(response.status, response.statusText);
@@ -67,14 +61,6 @@ export default function Login() {
             })
           }
         >
-          {loggedIn ? (
-            <>
-              Logged
-              {typeof window !== "undefined"
-                ? window.localStorage.getItem("userData")
-                : false}
-            </>
-          ) : null}
           <input
             className="rounded-md shadow-md hover:shadow-inner"
             type="email"
