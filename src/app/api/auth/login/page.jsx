@@ -52,7 +52,12 @@ export default function Login() {
                       organization: data.organization,
                       employee: data.employee,
                     };
-                    localStorage.setItem("userData", JSON.stringify(user));
+                    typeof window !== "undefined"
+                      ? window.localStorage.setItem(
+                          "userData",
+                          JSON.stringify(user)
+                        )
+                      : false;
                     setLoggedIn(true);
                   });
                 } else {
@@ -62,7 +67,14 @@ export default function Login() {
             })
           }
         >
-          {loggedIn ? <>Logged {localStorage.getItem("userData")}</> : null}
+          {loggedIn ? (
+            <>
+              Logged
+              {typeof window !== "undefined"
+                ? window.localStorage.getItem("userData")
+                : false}
+            </>
+          ) : null}
           <input
             className="rounded-md shadow-md hover:shadow-inner"
             type="email"

@@ -21,7 +21,9 @@ export default function Home() {
         Welcome {JSON.stringify(userData)}
         <button
           onClick={() => {
-            localStorage.removeItem("userData");
+            typeof window !== "undefined"
+              ? window.localStorage.removeItem("userData")
+              : false;
             setUserData(null);
           }}
         >
