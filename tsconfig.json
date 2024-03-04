@@ -22,7 +22,7 @@
       "@/components/*": ["./src/components/*"],
       "@/public/*": ["./public/*"],
       "@/libs/*": ["./src/app/libs/*"],
-      "@/auth/*": ["./src/auth/*"],
+      "@/auth/*": ["./src/api/auth/*"],
       "@/api/*": ["./src/api/*"]
     }
   },

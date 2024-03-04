@@ -1,9 +1,17 @@
 "use client";
 import Image from "next/image";
 import logoImg from "@/public/logo-black-removebg-preview.png";
+import { useState, useEffect } from "react";
 function handleSignUp() {}
 
-export default function SignUpPage() {
+
+export default function EmployeeSignUpPage() {
+  const [OrganizationId, setOrganizationId] = useState(() => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    return user.organization.id;
+  });
+  useEffect(() => {}, [OrganizationId]);
+  const [emailError, setEmailError] = useState(false);
   return (
     <div className="bg-white h-screen w-screen flex items-center justify-center">
       <div className="bg-white h-100 rounded-lg shadow-lg">
@@ -11,7 +19,9 @@ export default function SignUpPage() {
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
-          <h3 className="flex justify-center">Return of MGM</h3>
+          <h3 className="flex justify-center">
+            Organization: {OrganizationId}
+          </h3>
         </div>
 
         <form
@@ -22,46 +32,39 @@ export default function SignUpPage() {
               const name = e.target.elements.name.value;
               const email = e.target.elements.email.value;
               const password = e.target.elements.password.value;
-              const organization_name =
-                e.target.elements.organizationName.value;
-              const organization_address =
-                e.target.elements.headquartersAddress.value;
-              const employee = {
-                name,
-                email,
-                password,
-              };
-              const organization = {
-                organization_name,
-                organization_address,
-              };
-              console.log(organization, employee);
-              console.log(JSON.stringify({ organization, employee }));
-                const req = fetch("http://localhost:3030/signup", {
-                  method: "POST", // Dont enable CORS
+
+              const formData = { employee: { name, email, password } };
+              const req = fetch(
+                `http://localhost:3030/signup/${OrganizationId}`,
+                {
+                  method: "POST",
                   headers: {
                     accept: "application/json",
                   },
-                  body: JSON.stringify({ organization, employee }),
-                }).catch((error) => console.error(error));
-                req.then((res) => {
-                  if (res.ok) {
-                    console.log(
-                      "User created successfully",
-                      res.status,
-                      res.statusText
-                    );
-                    res.json().then((data) => {
-                      console.log(data);
-                    });
-                  } else {
+                  body: JSON.stringify(formData),
+                }
+              ).catch((error) => console.error(error));
+              req.then((res) => {
+                if (res.ok) {
+                  console.log(
+                    "User created successfully",
+                    res.status,
+                    res.statusText
+                  );
+                  res.json().then((data) => {
+                    console.log(data);
+                  });
+                } else {
+                  if (res.status === 409) {
                     console.error(
-                      "User creation failed",
+                      "User already exists with that email",
                       res.status,
                       res.statusText
                     );
+                    setEmailError(true);
                   }
-                });
+                }
+              });
             })
           }
         >
@@ -71,6 +74,9 @@ export default function SignUpPage() {
             name="name"
             placeholder="Name"
           />
+          {emailError && (
+            <h5 className="text-red-600">User exists with that email</h5>
+          )}
           <input
             className="rounded-md shadow-md hover:shadow-inner"
             type="email"
@@ -88,18 +94,6 @@ export default function SignUpPage() {
             type="password"
             name="pass2word"
             placeholder="Repeat Password"
-          />
-          <input
-            className="rounded-md shadow-md hover:shadow-inner"
-            type="text"
-            name="organizationName"
-            placeholder="Organization Name"
-          />
-          <input
-            className="rounded-md shadow-md hover:shadow-inner"
-            type="text"
-            name="headquartersAddress"
-            placeholder="Headquarter Address"
           />
           <button
             className="rounded-md w-20 shadow-lg h-8 hover:shadow-inner"

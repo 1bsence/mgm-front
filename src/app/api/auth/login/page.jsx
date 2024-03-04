@@ -6,6 +6,13 @@ import logoImg from "@/public/logo-black-removebg-preview.png";
 import { redirect } from "next/navigation";
 
 export default function Login() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (loggedIn) {
+      redirect("/");
+    }
+  }, [loggedIn]);
+
   function handleSignUp() {}
   return (
     <div className="bg-white h-screen w-screen flex items-center justify-center">
@@ -46,19 +53,16 @@ export default function Login() {
                       employee: data.employee,
                     };
                     localStorage.setItem("userData", JSON.stringify(user));
+                    setLoggedIn(true);
                   });
                 } else {
                   console.error(response.status, response.statusText);
                 }
               });
-              const userString = localStorage.getItem("userData");
-              const user = userString ? JSON.parse(userString) : null;
-              if (user) {
-                redirect("/");
-              }
             })
           }
         >
+          {loggedIn ? <>Logged {localStorage.getItem("userData")}</> : null}
           <input
             className="rounded-md shadow-md hover:shadow-inner"
             type="email"

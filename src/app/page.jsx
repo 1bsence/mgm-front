@@ -1,21 +1,36 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  var user = "";
-  var userString = "";
+  const [userData, setUserData] = useState(() => {
+    const userString = localStorage.getItem("userData");
+    return userString ? JSON.parse(userString) : null;
+  });
   useEffect(() => {
     // Logic to determine if a redirect is needed
-    userString = localStorage.getItem("userData1");
-    user = userString ? JSON.parse(userString) : null;
-    console.log(user, "user");
-  }, []);
-  if (!user) {
-    redirect("/login");
+    if (!userData) {
+      redirect("/login");
+    }
+  }, [userData]);
+  if (!userData) {
+    return <>NO USER DATA</>;
+  } else {
+    return (
+      <>
+        Welcome {JSON.stringify(userData)}
+        <button
+          onClick={() => {
+            localStorage.removeItem("userData");
+            setUserData(null);
+          }}
+        >
+          DELETE USER
+        </button>
+      </>
+    );
   }
-  // Logic to determine if a redirect is
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="text-3xl font-bold text-blue-600">Return of MGM</div>
