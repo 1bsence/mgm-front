@@ -24,13 +24,10 @@ const formStyle =
 function Login() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [error, setError] = useState(null);
-  var user;
   useEffect(() => {
     if (loggedIn) {
-      localStorage.setItem("userData", JSON.stringify(loggedIn));
+      localStorage.setItem("userData", loggedIn);
     }
-    user = JSON.parse(localStorage.getItem("userData"));
-    console.log(user + " USER DATA", loggedIn);
   }, [loggedIn, error]);
 
   function handleSignUp() {}
@@ -69,11 +66,7 @@ function Login() {
               data.then((response) => {
                 if (response.ok) {
                   response.json().then((data) => {
-                    var user = {
-                      organization: data.organization,
-                      employee: data.employee,
-                    };
-                    setLoggedIn(user);
+                    setLoggedIn(JSON.stringify(data));
                   });
                 } else {
                   setError("Invalid credentials: " + response.statusText);

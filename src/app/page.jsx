@@ -9,7 +9,6 @@ export default function Home() {
     if (typeof window !== "undefined") {
       // Perform localStorage action
       return localStorage.getItem("userData");
-      return userData ? JSON.parse(userData) : null;
     }
   });
   console.log(loggedIn);
@@ -23,13 +22,12 @@ export default function Home() {
   }, [loggedOut, error]);
   return (
     <>
-      {loggedIn ? "Welcome back, " + JSON.stringify(loggedIn) : "Please log in"}
       <button
         onClick={() => {
           setLoggedOut(true);
         }}
       >
-        DELETE USER
+        LOG OUT
       </button>
     </>
   );
