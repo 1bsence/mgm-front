@@ -6,6 +6,15 @@ import logoImg from "@/public/logo-black-removebg-preview.png";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
+const apiURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3030"
+    : "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
+const url =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://atc-2024-mgm-fe-linux-web-app.azurewebsites.net";
+
 const inputStyle =
   "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
 const btnStyle =
@@ -14,12 +23,15 @@ const formStyle =
   "flex flex-col justify-center items-center space-y-2 p-4 h-full w-full px-4 py-4";
 function Login() {
   const [loggedIn, setLoggedIn] = useState(null);
+  const [error, setError] = useState(null);
+  var user;
   useEffect(() => {
     if (loggedIn) {
       localStorage.setItem("userData", JSON.stringify(loggedIn));
-      redirect("/");
     }
-  }, [loggedIn]);
+    user = JSON.parse(localStorage.getItem("userData"));
+    console.log(user + " USER DATA", loggedIn);
+  }, [loggedIn, error]);
 
   function handleSignUp() {}
   return (
@@ -38,22 +50,17 @@ function Login() {
           onSubmit={
             (handleSignUp = (e) => {
               e.preventDefault();
-              const email = e.target.elements.email.value;
-              const password = e.target.elements.password.value;
               const formData = {
-                email,
-                password,
+                email: e.target.elements.email.value,
+                password: e.target.elements.password.value,
               };
-              const data = fetch(
-                "http://atc-2024-mgm-be-linux-web-app.azurewebsites.net/login",
-                {
-                  method: "POST", // Dont enable CORS
-                  headers: {
-                    accept: "application/json",
-                  },
-                  body: JSON.stringify(formData),
-                }
-              ).catch(function (error) {
+              const data = fetch(`${apiURL}/login`, {
+                method: "POST", // Dont enable CORS
+                headers: {
+                  accept: "application/json",
+                },
+                body: JSON.stringify(formData),
+              }).catch(function (error) {
                 console.log(
                   "There was a problem with the fetch operation: " +
                     error.message
@@ -69,19 +76,22 @@ function Login() {
                     setLoggedIn(user);
                   });
                 } else {
-                  console.error(response.status, response.statusText);
+                  setError("Invalid credentials: " + response.statusText);
                 }
               });
             })
           }
         >
+          {error && <h4 className="">{error}</h4>}
           <input
+            required={true}
             className={inputStyle}
             type="email"
             name="email"
             placeholder="E-mail"
           />
           <input
+            required={true}
             className={inputStyle}
             type="password"
             name="password"
@@ -91,7 +101,7 @@ function Login() {
             <button className={btnStyle + " rounded-l-md"} type="submit">
               Login
             </button>
-            <Link href="http://localhost:3000/api/auth/signup">
+            <Link href={url + "/api/auth/signup"}>
               <button className={btnStyle + " rounded-r-md"}>SignUp</button>
             </Link>
           </div>

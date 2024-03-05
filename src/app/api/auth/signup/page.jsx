@@ -4,6 +4,15 @@ import logoImg from "@/public/logo-black-removebg-preview.png";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+const apiURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3030"
+    : "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
+const url =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://atc-2024-mgm-fe-linux-web-app.azurewebsites.net";
+
 const inputStyle =
   "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
 const btnStyle =
@@ -37,46 +46,33 @@ export default function SignUpPage() {
           onSubmit={
             (handleSignUp = (e) => {
               e.preventDefault();
-              const name = e.target.elements.name.value;
-              const email = e.target.elements.email.value;
-              const password = e.target.elements.password.value;
-              const organization_name =
-                e.target.elements.organizationName.value;
-              const organization_address =
-                e.target.elements.headquartersAddress.value;
-              if (password !== e.target.elements.pass2word.value) {
+              const employee = {
+                name: e.target.elements.name.value,
+                email: e.target.elements.email.value,
+                password: e.target.elements.password.value,
+              };
+              const organization = {
+                organization_name: e.target.elements.organizationName.value,
+                organization_address:
+                  e.target.elements.headquartersAddress.value,
+              };
+              if (
+                e.target.elements.password.value !==
+                e.target.elements.pass2word.value
+              ) {
                 setError(["password", "Passwords does not match!"]);
                 return;
               }
-              const employee = {
-                name,
-                email,
-                password,
-              };
-              const organization = {
-                organization_name,
-                organization_address,
-              };
-              console.log(organization, employee);
-              console.log(JSON.stringify({ organization, employee }));
-              const req = fetch("http://localhost:3030/signup", {
-                method: "POST", // Dont enable CORS
+
+              const req = fetch(`${apiURL}/signup`, {
+                method: "POST",
                 headers: {
                   accept: "application/json",
                 },
                 body: JSON.stringify({ organization, employee }),
               }).catch((error) => console.error(error));
               req.then((res) => {
-                if (res.ok) {
-                  console.log(
-                    "User created successfully",
-                    res.status,
-                    res.statusText
-                  );
-                  res.json().then((data) => {
-                    console.log(data);
-                  });
-                } else {
+                if (!res.ok) {
                   console.error(
                     "User creation failed",
                     res.status,
@@ -94,12 +90,14 @@ export default function SignUpPage() {
             </div>
           ) : null}
           <input
+          required={true}
             className={inputStyle}
             type="text"
             name="name"
             placeholder="Name"
           />
           <input
+          required={true}
             className={inputStyle}
             type="email"
             name="email"
@@ -109,35 +107,39 @@ export default function SignUpPage() {
             <h5 className="text-red-600">Passwords do not match</h5>
           ) : null}
           <input
+          required={true}
             className={inputStyle}
             type="password"
             name="password"
             placeholder="Password"
           />
           <input
+          required={true}
             className={inputStyle}
             type="password"
             name="pass2word"
             placeholder="Repeat Password"
           />
           <input
+          required={true}
             className={inputStyle}
             type="text"
             name="organizationName"
             placeholder="Organization Name"
           />
           <input
+          required={true}
             className={inputStyle}
             type="text"
             name="headquartersAddress"
             placeholder="Headquarter Address"
           />
           <div>
-            <button className={btnStyle  + " rounded-l-md"} type="submit">
+            <button className={btnStyle + " rounded-l-md"} type="submit">
               SignUp
             </button>
-            <Link href="http://localhost:3000/api/auth/login">
-              <button className={btnStyle  + " rounded-r-md"}>Login</button>
+            <Link href={url + "/api/auth/login"}>
+              <button className={btnStyle + " rounded-r-md"}>Login</button>
             </Link>
           </div>
         </form>
