@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div>
       PROFILE PAGE
-      {loggedIn && <h1>Logged In</h1>}
+      {loggedIn}
     </div>
   );
   //}
