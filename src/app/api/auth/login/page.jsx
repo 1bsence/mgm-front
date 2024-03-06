@@ -29,11 +29,6 @@ function Login() {
       if (typeof window !== "undefined") {
         console.log("Setting local storage", loggedIn);
         localStorage.setItem("userData", loggedIn);
-      }
-    }
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("userData")) {
-        console.log("Got local storage: ", localStorage.getItem("userData"));
         redirect("/");
       }
     }
@@ -76,7 +71,6 @@ function Login() {
                 if (response.ok) {
                   response.json().then((data) => {
                     setLoggedIn(JSON.stringify(data));
-                    console.log(data);
                   });
                 } else {
                   setError("Invalid credentials: " + response.statusText);

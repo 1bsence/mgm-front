@@ -28,42 +28,30 @@ const url =
 export default function NavBar() {
   const pathName = usePathname();
   const display = pathName.includes("api/auth") ? " hidden" : " block";
-  if (display === " hidden") {
-    return null;
-  }
+
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
-      // Perform localStorage action
-      return localStorage.getItem("userData");
+      return localStorage.getItem("userData") || null;
     }
   });
   const [loggedOut, setLoggedOut] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
-    if (!loggedIn) {
-      setLoggedIn(() => {
-        if (typeof window !== "undefined") {
-          // Perform localStorage action
-          return localStorage.getItem("userData");
-        }
-      });
-      if (!loggedIn) {
-        redirect("/api/auth/login");
-      }
-    }
     if (loggedOut) {
       if (typeof window !== "undefined") {
         localStorage.removeItem("userData");
-        redirect("/");
+        redirect("/api/auth/login");
       }
     }
   }, [loggedOut, error]);
-
+  if (display === " hidden") {
+    return null;
+  }
   return (
     <nav className={"bg-primary h-screen w-52 p-3" + display}>
       <div className=" w-10/12 h-36">
         <div className="flex flex-row justify-center items-center p-3">
-          <Image src={logoimg} alt="logo" width={70} />
+          <Image src={logoimg} priority alt="logo" width={70} />
           <h3 className="text-secondary text-2xl">MGM</h3>
         </div>
       </div>
