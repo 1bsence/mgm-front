@@ -26,7 +26,9 @@ function Login() {
   const [error, setError] = useState(null);
   useEffect(() => {
     if (loggedIn) {
-      localStorage.setItem("userData", loggedIn);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("userData", loggedIn);
+      }
     }
     if (typeof window !== "undefined") {
       localStorage.getItem("userData") && redirect("/");
