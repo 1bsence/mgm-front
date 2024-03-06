@@ -31,7 +31,9 @@ function Login() {
       }
     }
     if (typeof window !== "undefined") {
-      localStorage.getItem("userData") && redirect("/");
+      if (localStorage.getItem("userData")) {
+        redirect("/");
+      }
     }
   }, [loggedIn, error]);
 
@@ -72,6 +74,7 @@ function Login() {
                 if (response.ok) {
                   response.json().then((data) => {
                     setLoggedIn(JSON.stringify(data));
+                    console.log(data);
                   });
                 } else {
                   setError("Invalid credentials: " + response.statusText);
