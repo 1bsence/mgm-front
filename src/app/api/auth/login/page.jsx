@@ -28,6 +28,9 @@ function Login() {
     if (loggedIn) {
       localStorage.setItem("userData", loggedIn);
     }
+    if (typeof window !== "undefined") {
+      localStorage.getItem("userData") && redirect("/");
+    }
   }, [loggedIn, error]);
 
   function handleSignUp() {}

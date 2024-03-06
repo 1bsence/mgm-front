@@ -6,12 +6,6 @@ const config= {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    colors: {
-      "primary": '#EFEDFF',
-      "secondary":"#8186F1",
-      "accent1": "#F9F7FF",
-      "accent2": "#D2CFF3"
-    },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
@@ -19,6 +13,12 @@ const config= {
       roboto: ['Roboto', 'sans-serif'],
     },
     extend: {
+      colors: {
+        "primary": '#EFEDFF',
+        "secondary":"#8186F1",
+        "accent1": "#F9F7FF",
+        "accent2": "#D2CFF3"
+      },
     }
   }
 };

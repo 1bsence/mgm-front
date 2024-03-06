@@ -27,7 +27,6 @@ export default function EmployeeSignUpPage() {
   const searchParams = useSearchParams();
   const orgName = searchParams.get("name");
 
-  const Color = searchParams.get("color");
   const [userData, setUserData] = useState(() => {
     const userData = localStorage.getItem("userData");
     return userData ? JSON.parse(userData) : null;

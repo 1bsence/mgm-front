@@ -2,9 +2,5 @@
 "use client";
 
 export default function Project() {
-  return (
-    <div className="bg-pink-400 w-3/4 h-20 shadow-lg">
-      PROJECT
-    </div>
-  );
+  return <div className="">PROJECT PAGE</div>;
 }
