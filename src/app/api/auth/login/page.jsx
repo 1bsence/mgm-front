@@ -27,11 +27,13 @@ function Login() {
   useEffect(() => {
     if (loggedIn) {
       if (typeof window !== "undefined") {
+        console.log("Setting local storage", loggedIn);
         localStorage.setItem("userData", loggedIn);
       }
     }
     if (typeof window !== "undefined") {
       if (localStorage.getItem("userData")) {
+        console.log("Got local storage: ", localStorage.getItem("userData"));
         redirect("/");
       }
     }

@@ -11,6 +11,7 @@ import workingIcon from "@/public/icons/working_icon.svg";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
+
 const liStil =
   "rounded-md shadow-md flex flex-row items-center space-x-3 w-10/12 h-10 hover:text-primary hover:bg-accent2 text-secondary p-2";
 const btnStyle =
@@ -25,6 +26,11 @@ const url =
     : "https://atc-2024-mgm-fe-linux-web-app.azurewebsites.net";
 
 export default function NavBar() {
+  const pathName = usePathname();
+  const display = pathName.includes("api/auth") ? " hidden" : " block";
+  if (display === " hidden") {
+    return null;
+  }
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       // Perform localStorage action
@@ -34,13 +40,25 @@ export default function NavBar() {
   const [loggedOut, setLoggedOut] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
+    if (!loggedIn) {
+      setLoggedIn(() => {
+        if (typeof window !== "undefined") {
+          // Perform localStorage action
+          return localStorage.getItem("userData");
+        }
+      });
+      if (!loggedIn) {
+        redirect("/api/auth/login");
+      }
+    }
     if (loggedOut) {
-      localStorage.removeItem("userData");
-      redirect("/");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("userData");
+        redirect("/");
+      }
     }
   }, [loggedOut, error]);
-  const pathName = usePathname();
-  const display = pathName.includes("api/auth") ? " hidden" : " block";
+
   return (
     <nav className={"bg-primary h-screen w-52 p-3" + display}>
       <div className=" w-10/12 h-36">
