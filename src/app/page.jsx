@@ -23,6 +23,11 @@ export default function Home() {
       redirect("/api/auth/login");
     }
   }, [loggedOut, error]);
-  return <div>PROFILE PAGE</div>;
+  return (
+    <div>
+      PROFILE PAGE
+      {loggedIn && <h1>Logged In</h1>}
+    </div>
+  );
   //}
 }
