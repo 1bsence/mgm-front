@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 const liStil =
-  "rounded-md shadow-md flex flex-row items-center justify-center md:justify-start space-x-3 my-4 w-full h-8 my-2 hover:text-primary hover:bg-accent2  text-secondary";
+  "rounded-md shadow-md flex flex-row items-center justify-center md:justify-start md:px-1 my-4 w-full h-8 my-2 hover:text-primary hover:bg-accent2  text-secondary";
 
 const btnStyle =
   "text-secondary bg-accent1 hover:bg-accent2  w-20 shadow-md h-8 hover:shadow-inner px-2 py-1";

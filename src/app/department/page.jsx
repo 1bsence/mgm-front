@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import profile from "@/public/logo-black-removebg-preview.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const department = [
   {
@@ -394,9 +395,6 @@ export default function Department() {
       return localStorage.getItem("userData") || null;
     }
   });
-  const [loggedOut, setLoggedOut] = useState(() => {
-    return loggedIn === null ? true : false;
-  });
   const [error, setError] = useState(null);
   useEffect(() => {
     if (!loggedIn) {
@@ -411,10 +409,16 @@ export default function Department() {
             <div
               name="department-card"
               key={key}
-              className="bg-primary w-52 h-80 rounded-md shadow-lg m-5 p-3 overflow-auto text-secondary"
+              className="bg-primary w-52 h-80 rounded-md shadow-lg m-2 p-2 overflow-auto text-secondary"
             >
-              <div name="DEPARTAMENT NAME">
+              <div
+                name="DEPARTAMENT NAME"
+                className="flex flex-row justify-between"
+              >
                 <h1 className="text-lg text-center">{dep.name}</h1>
+                <Link href={"/department/" + dep.id} className="underline">
+                  view
+                </Link>
               </div>
               <hr className="h-1 shadow-md bg-secondary" />
               <div
