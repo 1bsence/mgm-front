@@ -110,6 +110,90 @@ const department = [
         projects: [],
         department: "Java",
       },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+        name: "ionut",
+        email: "ionut@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
+        name: "ionut",
+        email: "bbb@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
+        name: "ionut",
+        email: "ccc@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+        name: "ionut",
+        email: "ionut@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
+        name: "ionut",
+        email: "bbb@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
+        name: "ionut",
+        email: "ccc@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
     ],
   },
   {
@@ -121,6 +205,143 @@ const department = [
     },
     skills: [],
     employees: [
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+        name: "ionut",
+        email: "ionut@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
+        name: "ionut",
+        email: "bbb@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
+        name: "ionut",
+        email: "ccc@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+    ],
+  },
+  {
+    id: "5badadsa-d4fe-4a65-b137-ab8dkfakdg",
+    name: "Java",
+    manager: {
+      name: "Chuck Norris",
+      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+    },
+    skills: [],
+    employees: [
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+        name: "ionut",
+        email: "ionut@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
+        name: "ionut",
+        email: "bbb@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
+        name: "ionut",
+        email: "ccc@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
+        name: "ionut",
+        email: "ionut@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
+        name: "ionut",
+        email: "bbb@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
+      {
+        id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
+        name: "ionut",
+        email: "ccc@gmail.com",
+        password: "mypass",
+        role: "employee",
+        skills: [],
+        rights: {
+          id: "employee",
+          canDoEverything: "true",
+        },
+        projects: [],
+        department: "Java",
+      },
       {
         id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
         name: "ionut",
@@ -183,19 +404,19 @@ export default function Department() {
     }
   }, [loggedIn, error]);
   return (
-    <div className="p-5 bg-blue-500 w-min:100 h-screen overflow-auto">
+    <div className="p-5 bg-secondary w-min:100 h-screen overflow-auto">
       <div className="w-full w-min:20 h-full flex flex-wrap">
         {department.map((dep, key) => {
           return (
             <div
               name="department-card"
               key={key}
-              className="bg-red-500 w-52 h-80 rounded-md shadow-lg m-5 p-3 overflow-hidden"
+              className="bg-primary w-52 h-80 rounded-md shadow-lg m-5 p-3 overflow-auto text-secondary"
             >
               <div name="DEPARTAMENT NAME">
                 <h1 className="text-lg text-center">{dep.name}</h1>
               </div>
-              <hr className="h-1 shadow-md" />
+              <hr className="h-1 shadow-md bg-secondary" />
               <div
                 name="DEPARTAMENT MANAGER"
                 className="flex flex-col items-center justify-center"
@@ -203,13 +424,16 @@ export default function Department() {
                 <Image src={profile} alt="profile" width={50} />
                 <h5>{dep.manager.name}</h5>
               </div>
-              <hr className="h-1 shadow-md" />
-              <div name="EMPLOYEE LIST" className="flex flex-wrap">
+              <hr className="h-1 shadow-md bg-secondary m-2" />
+              <div
+                name="EMPLOYEE LIST"
+                className="grid grid-cols-3 grid-flow-row text-secondary"
+              >
                 {dep.employees.map((emp, key) => {
                   return (
                     <div
                       key={key}
-                      className="grid grid-cols-1 shadow-sm grid-rows-2 m-2 w-10"
+                      className="flex flex-col items-center justify-center bg-primary shadow-sm rounded-md m-2 w-10"
                     >
                       <Image
                         className=""
