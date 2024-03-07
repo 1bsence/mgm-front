@@ -13,7 +13,7 @@ const apiURL =
 const url =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://atc-2024-mgm-fe-linux-web-app.azurewebsites.net";
+    : "https://mgm-front.vercel.app";
 
 const inputStyle =
   "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
