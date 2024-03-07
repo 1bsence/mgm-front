@@ -19,5 +19,5 @@ export default function Home() {
       redirect("/api/auth/login");
     }
   }, [loggedIn, error]);
-  return <div></div>;
+  return <div>HOME PAGE</div>;
 }
