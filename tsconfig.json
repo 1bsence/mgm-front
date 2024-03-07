@@ -26,6 +26,6 @@
       "@/api/*": ["./src/api/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "src/app/api/auth/[...nextauth]/route.js", "src/app/page.jsx", "src/components/navBar.jsx", "src/app/api/auth/layout.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "src/app/api/auth/[...nextauth]/route.js", "src/app/page.jsx", "src/components/NavBar.jsx", "src/app/api/auth/layout.jsx"],
   "exclude": ["node_modules"]
 }

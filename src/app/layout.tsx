@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-roboto font-medium bg-secondary text-primary flex flex-wrap">
         <NavBar />
-        {children}
+        <main className="flex-1">{children}</main>
         <Analytics />
         <SpeedInsights />
       </body>

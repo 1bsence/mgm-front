@@ -183,8 +183,8 @@ export default function Department() {
     }
   }, [loggedIn, error]);
   return (
-    <div className="p-5 bg-blue-500 h-screen overflow-hidden">
-      <div className="">
+    <div className="p-5 bg-blue-500 w-min:100 h-screen overflow-auto">
+      <div className="w-full w-min:20 h-full flex flex-wrap">
         {department.map((dep, key) => {
           return (
             <div
