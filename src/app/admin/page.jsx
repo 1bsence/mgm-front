@@ -23,7 +23,7 @@ export default function Home() {
     if (!loggedIn) {
       redirect("/api/auth/login");
     }
-  }, [loggedIn, error]);
+  }, [loggedIn, error, currUser]);
   return (
     <div className="flex flex-col items-center my-52">
       HOME PAGE
