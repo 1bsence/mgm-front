@@ -55,7 +55,7 @@ function Login() {
               const data = fetch(endpoint + "/login", {
                 method: "POST", // Dont enable CORS
                 headers: {
-                  accept: "application/json",
+                  headers: "application/json",
                 },
                 body: JSON.stringify(formdata),
               }).catch(function (error) {
