@@ -36,12 +36,12 @@ const navigation_items = [
     path: "/",
     permmision: "Employee",
   },
-  {
-    name: "Project",
-    icon: workingIcon,
-    path: "/project",
-    permmision: "Administrator",
-  },
+  // {
+  //   name: "Project",
+  //   icon: workingIcon,
+  //   path: "/project",
+  //   permmision: "Administrator",
+  // },
   {
     name: "Departments",
     icon: employeeIcon,
