@@ -8,8 +8,7 @@ import Link from "next/link";
 import "@/styles/globals.css";
 
 const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
-const production_endpoint =
-  "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
+const production_endpoint = process.env.NEXT_PUBLIC_PRRODUCTION_ENDPOINT;
 const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
 const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 
