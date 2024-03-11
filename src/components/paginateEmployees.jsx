@@ -5,7 +5,7 @@ import proilePic from "@/public/logo-black-removebg-preview.png";
 import boxEditIcon from "@/public/icons/edit_square_FILL0.svg";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-const paginateEmployees = ({
+const PaginateEmployees = ({
   items,
   currentPage,
   pageSize,
@@ -97,4 +97,4 @@ const paginateEmployees = ({
     </div>
   );
 };
-export default paginateEmployees;
+export default PaginateEmployees;

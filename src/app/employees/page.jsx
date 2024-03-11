@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import "@/styles/globals.css";
-import paginateEmployees from "@/components/paginateEmployees";
-import editEmployeeBox from "@/components/editEmployeeBox";
+import PaginateEmployees from "@/components/PaginateEmployees";
+import EditEmployeeBox from "@/components/EditEmployeeBox";
 
 const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
 const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
@@ -54,13 +54,13 @@ export default function Employee() {
     <div>
       {employeeEDit && (
         <div className="fixed top-40 left-1/3 md:left-1/2 w-80 h-52 bg-primary  border-colorful-accent border-opacity-65 border-2 rounded-md">
-          <editEmployeeBox
+          <EditEmployeeBox
             employee={employeeEDit}
             showEmployeeEditBox={onEmployeeEdit}
           />
         </div>
       )}
-      <paginateEmployees
+      <PaginateEmployees
         items={employees}
         currentPage={currentPage}
         pageSize={pageSize}
