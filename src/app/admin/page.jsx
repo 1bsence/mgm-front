@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/router";
 const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
 const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 const app_url =
@@ -24,6 +24,10 @@ export default function Home() {
       redirect("/api/auth/login");
     }
   }, [loggedIn, error, currUser]);
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="flex flex-col items-center my-52">
       HOME PAGE

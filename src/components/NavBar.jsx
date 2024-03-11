@@ -102,7 +102,12 @@ export default function NavBar() {
 }
 
 function navigationList(items, currUser) {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
   return (
+
     <ul>
       {items.map((item, index) => {
         if (item.permmision === "Employee") {
