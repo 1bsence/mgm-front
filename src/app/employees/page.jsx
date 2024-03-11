@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import "@/styles/globals.css";
-import PaginateEmployees from "@/components/PaginateEmployees";
-import EditEmployeeBox from "@/components/EditEmployeeBox";
+import PaginateEmployees from "../../components/PaginateEmployees";
+import EditEmployeeBox from "../../components/EditEmployeeBox";
 
 const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
 const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
