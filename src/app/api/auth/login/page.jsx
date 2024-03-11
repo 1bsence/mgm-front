@@ -9,7 +9,7 @@ import "@/styles/globals.css";
 
 const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
 const production_endpoint =
-  "http://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
+  "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
 const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
 const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 
