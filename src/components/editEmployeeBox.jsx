@@ -11,7 +11,7 @@ const endpoint =
 const app_url =
   process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
-export default function EditEmployeeBox({ employee, showEmployeeEditBox }) {
+const EditEmployeeBox = ({ employee, showEmployeeEditBox }) => {
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("userData")) || null;
@@ -106,4 +106,5 @@ export default function EditEmployeeBox({ employee, showEmployeeEditBox }) {
       </form>
     </div>
   );
-}
+};
+export default EditEmployeeBox;
