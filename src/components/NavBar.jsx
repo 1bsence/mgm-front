@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import "@/styles/globals.css";
-
+import { useRouter } from "next/navigation";
 const apiURL =
   process.env.NODE_ENV === "development"
     ? process.env.NEXT_PUBLIC_LOCAL_ENDPOINT
@@ -57,18 +57,20 @@ const navigation_items = [
 ];
 
 export default function NavBar() {
+  const router = useRouter();
   const pathName = usePathname();
   const display = pathName.includes("api/auth") ? " hidden" : " block";
-  const [loggedIn, setLoggedIn] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("userData") || null;
-    }
-  });
+  const [loggedIn, setLoggedIn] = useState();
 
   const [loggedOut, setLoggedOut] = useState(null);
   const [error, setError] = useState(null);
   const currUser = loggedIn ? JSON.parse(loggedIn).employee : null;
   useEffect(() => {
+    setLoggedIn(() => {
+      if (typeof window !== "undefined") {
+        return localStorage.getItem("userData") || null;
+      }
+    });
     if (loggedOut) {
       if (typeof window !== "undefined") {
         localStorage.removeItem("userData");
@@ -79,6 +81,10 @@ export default function NavBar() {
 
   if (display === " hidden") {
     return null;
+  }
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
   }
   return (
     <nav className="h-screen w-14 md:w-36 sticky left-0 top-0">
@@ -94,7 +100,7 @@ export default function NavBar() {
 
       <div name="ORG SECTION">
         <h4 className=" md:block hidden mx-2">Organization</h4>
-        {navigationList(navigation_items, currUser)}
+        {/* {navigationList(navigation_items, currUser)} */}
       </div>
       <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
     </nav>
@@ -102,12 +108,7 @@ export default function NavBar() {
 }
 
 function navigationList(items, currUser) {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
   return (
-
     <ul>
       {items.map((item, index) => {
         if (item.permmision === "Employee") {

@@ -19,13 +19,14 @@ export default function Employee() {
   const [employeeEDit, setEmployeeEdit] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loggedIn, setLoggedIn] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("userData") || null;
-    }
-  });
+  const [loggedIn, setLoggedIn] = useState();
   const [error, setError] = useState(null);
   useEffect(() => {
+    setLoggedIn(() => {
+      if (typeof window !== "undefined") {
+        return localStorage.getItem("userData") || null;
+      }
+    });
     fetch(endpoint + "/employee/seeall", {
       method: "POST",
       headers: {
