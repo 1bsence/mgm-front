@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import React from "react";
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-roboto font-medium bg-secondary text-primary flex flex-wrap">
+      <body className="font-roboto font-medium bg-primary text-secondary flex flex-wrap">
         <NavBar />
         <main className="flex-1">{children}</main>
         <Analytics />

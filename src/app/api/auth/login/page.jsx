@@ -5,25 +5,22 @@ import { React, useEffect, useState } from "react";
 import logoImg from "@/public/logo-black-removebg-preview.png";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import "@/styles/globals.css";
 
-const apiURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3030"
-    : "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
-const url =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://mgm-front.vercel.app";
+const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
+const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
+const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
+const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 
-const inputStyle =
-  "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
-const btnStyle =
-  "text-secondary bg-accent1 hover:bg-accent2 w-20 shadow-md h-8 hover:shadow-inner px-2 py-1";
-const formStyle =
-  "flex flex-col justify-center items-center space-y-2 p-4 h-full w-full px-4 py-4";
+const endpoint =
+  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
+const app_url =
+  process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
+
 function Login() {
   const [loggedIn, setLoggedIn] = useState(null);
-  const [error, setError] = useState(null);
+  const [emailError, setEmaiilError] = useState(false);
+  const [passsError, setPassError] = useState(false);
   useEffect(() => {
     if (loggedIn) {
       if (typeof window !== "undefined") {
@@ -32,12 +29,12 @@ function Login() {
         redirect("/");
       }
     }
-  }, [loggedIn, error]);
+  }, [loggedIn, emailError, passsError]);
 
   function handleSignUp() {}
   return (
-    <div className="bg-secondary h-screen w-screen flex items-center justify-center">
-      <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg">
+    <div className=" h-screen w-screen flex items-center justify-center">
+      <div className="  h-100 rounded-lg shadow-lg">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
@@ -47,20 +44,20 @@ function Login() {
           </div>
         </div>
         <form
-          className={formStyle}
+          className="form-style"
           onSubmit={
             (handleSignUp = (e) => {
               e.preventDefault();
-              const formData = {
+              const formdata = {
                 email: e.target.elements.email.value,
                 password: e.target.elements.password.value,
               };
-              const data = fetch(`${apiURL}/login`, {
+              const data = fetch(endpoint + "/login", {
                 method: "POST", // Dont enable CORS
                 headers: {
                   accept: "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formdata),
               }).catch(function (error) {
                 console.log(
                   "There was a problem with the fetch operation: " +
@@ -73,33 +70,33 @@ function Login() {
                     setLoggedIn(JSON.stringify(data));
                   });
                 } else {
-                  setError("Invalid credentials: " + response.statusText);
+                  setPassError("Invalid credentials: " + response.statusText);
                 }
               });
             })
           }
         >
-          {error && <h4 className="">{error}</h4>}
+          {emailError && <h4 className="text-red">{emailError}</h4>}
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="email"
             name="email"
             placeholder="E-mail"
           />
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="password"
             name="password"
             placeholder="Password"
           />
           <div>
-            <button className={btnStyle + " rounded-l-md"} type="submit">
+            <button className={"btn-style" + " rounded-l-md"} type="submit">
               Login
             </button>
-            <Link href={url + "/api/auth/signup"}>
-              <button className={btnStyle + " rounded-r-md"}>SignUp</button>
+            <Link href={"/api/auth/signup"}>
+              <button className={"btn-style" + " rounded-r-md"}>SignUp</button>
             </Link>
           </div>
         </form>

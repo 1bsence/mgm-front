@@ -20,5 +20,5 @@ export default function Project() {
       redirect("/api/auth/login");
     }
   }, [loggedIn, error]);
-  return <div className="">PROJECT PAGE</div>;
+  return <div>Project</div>;
 }

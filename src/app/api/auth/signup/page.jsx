@@ -3,22 +3,17 @@ import Image from "next/image";
 import logoImg from "@/public/logo-black-removebg-preview.png";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import "@/styles/globals.css";
 
-const apiURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3030"
-    : "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
-const url =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://mgm-front.vercel.app";
+const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
+const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
+const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
+const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 
-const inputStyle =
-  "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
-const btnStyle =
-  "text-secondary bg-accent1 hover:bg-accent2  w-20 shadow-md h-8 hover:shadow-inner px-2 py-1";
-const formStyle =
-  "flex flex-col justify-center items-center space-y-2 p-4 h-full w-full px-4 py-4";
+const endpoint =
+  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
+const app_url =
+  process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
 function handleSignUp() {}
 
@@ -33,7 +28,7 @@ export default function SignUpPage() {
   }, [loggedIn, error]);
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg">
+      <div className="h-100 rounded-lg shadow-lg">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
@@ -42,7 +37,7 @@ export default function SignUpPage() {
         </div>
 
         <form
-          className={formStyle}
+          className="form-style"
           onSubmit={
             (handleSignUp = (e) => {
               e.preventDefault();
@@ -52,9 +47,8 @@ export default function SignUpPage() {
                 password: e.target.elements.password.value,
               };
               const organization = {
-                organization_name: e.target.elements.organizationName.value,
-                organization_address:
-                  e.target.elements.headquartersAddress.value,
+                name: e.target.elements.organizationName.value,
+                address: e.target.elements.headquartersAddress.value,
               };
               if (
                 e.target.elements.password.value !==
@@ -64,7 +58,7 @@ export default function SignUpPage() {
                 return;
               }
 
-              const req = fetch(`${apiURL}/signup`, {
+              const req = fetch(`${endpoint}/signup`, {
                 method: "POST",
                 headers: {
                   accept: "application/json",
@@ -73,11 +67,6 @@ export default function SignUpPage() {
               }).catch((error) => console.error(error));
               req.then((res) => {
                 if (!res.ok) {
-                  console.error(
-                    "User creation failed",
-                    res.status,
-                    res.statusText
-                  );
                   setError(res.statusText);
                 }
               });
@@ -90,15 +79,15 @@ export default function SignUpPage() {
             </div>
           ) : null}
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="text"
             name="name"
             placeholder="Name"
           />
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="email"
             name="email"
             placeholder="E-mail"
@@ -107,39 +96,39 @@ export default function SignUpPage() {
             <h5 className="text-red-600">Passwords do not match</h5>
           ) : null}
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="password"
             name="password"
             placeholder="Password"
           />
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="password"
             name="pass2word"
             placeholder="Repeat Password"
           />
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="text"
             name="organizationName"
             placeholder="Organization Name"
           />
           <input
-          required={true}
-            className={inputStyle}
+            required={true}
+            className="input-field-style"
             type="text"
             name="headquartersAddress"
             placeholder="Headquarter Address"
           />
           <div>
-            <button className={btnStyle + " rounded-l-md"} type="submit">
+            <button className={"btn-style" + " rounded-l-md"} type="submit">
               SignUp
             </button>
-            <Link href={url + "/api/auth/login"}>
-              <button className={btnStyle + " rounded-r-md"}>Login</button>
+            <Link href={"/api/auth/login"}>
+              <button className={"btn-style" + " rounded-r-md"}>Login</button>
             </Link>
           </div>
         </form>

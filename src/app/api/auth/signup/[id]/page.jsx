@@ -3,28 +3,24 @@ import Image from "next/image";
 import logoImg from "@/public/logo-black-removebg-preview.png";
 import { useState, useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
+import "@/styles/globals.css";
 
 function handleSignUp() {}
 
-const inputStyle =
-  "text-secondary placeholder:text-secondary rounded-md shadow-md hover:shadow-inner px-2 py-1 w-48 h-8";
-const btnStyle =
-  "text-secondary bg-accent1 hover:bg-accent2 rounded-md w-20 shadow-md h-8 hover:shadow-inner px-2 py-1";
-const formStyle =
-  "flex flex-col justify-center items-center space-y-2 p-4 h-full w-full px-4 py-4";
-const url =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://atc-2024-mgm-fe-linux-web-app.azurewebsites.net";
-const apiURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3030"
-    : "https://atc-2024-mgm-be-linux-web-app.azurewebsites.net";
+const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
+const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
+const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
+const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
+
+const endpoint =
+  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
+const app_url =
+  process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
 export default function EmployeeSignUpPage() {
   const pathname = usePathname();
-  const orgID = pathname.split("/")[4];
   const searchParams = useSearchParams();
+  const orgID = pathname.split("/")[4];
   const orgName = searchParams.get("name");
 
   const [userData, setUserData] = useState(() => {
@@ -45,7 +41,7 @@ export default function EmployeeSignUpPage() {
         </div>
 
         <form
-          className={formStyle}
+          className="form-style"
           onSubmit={
             (handleSignUp = (e) => {
               e.preventDefault();
@@ -63,24 +59,29 @@ export default function EmployeeSignUpPage() {
                   password: e.target.elements.password.value,
                 },
               };
-              const req = fetch(`${apiURL}/${orgID}`, {
+              const req = fetch(`${endpoint}/signup/${orgID}`, {
                 method: "POST",
                 headers: {
                   accept: "application/json",
                 },
                 body: JSON.stringify(formData),
-              }).catch((error) => console.error(error));
+              }).catch((error) => {
+                console.error(error);
+                setEmaiilError(true);
+              });
               req.then((res) => {
-                if (res.ok) {
+                if (res) {
                   res.json().then((data) => {
                     setUserData(data);
                     console.log(data);
                   });
                 } else {
-                  if (res.status) {
-                    console.error(res.status);
+                  if (res) {
+                    console.error(
+                      res.status == 409 ? "User exists" : res.statusText
+                    );
                     setEmaiilError("Invalid credentials: " + res.statusText);
-                    console.log(res);
+                    console.log(res.status.id);
                   }
                 }
               });
@@ -89,17 +90,15 @@ export default function EmployeeSignUpPage() {
         >
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="text"
             name="name"
             placeholder="Name"
           />
-          {emailError && (
-            <h5 className="text-red-600">User exists with that email</h5>
-          )}
+          {emailError && <h5>User exists with that email</h5>}
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="email"
             name="email"
             placeholder="E-mail"
@@ -109,19 +108,19 @@ export default function EmployeeSignUpPage() {
           ) : null}
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="password"
             name="password"
             placeholder="Password"
           />
           <input
             required={true}
-            className={inputStyle}
+            className="input-field-style"
             type="password"
             name="pass2word"
             placeholder="Repeat Password"
           />
-          <button className={btnStyle} type="submit">
+          <button className={"btn-style" + "rounded-md"} type="submit">
             SignUp
           </button>
         </form>
