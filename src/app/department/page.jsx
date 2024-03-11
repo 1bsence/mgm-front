@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import profile from "@/public/logo-black-removebg-preview.png";
 import Image from "next/image";
 import Link from "next/link";
-import PaginateDepartment from "@/components/PaginateEmployees";
+import PaginateDepartment from "@/components/paginateDepartment";
 
 export default function Department() {
   const [loggedIn, setLoggedIn] = useState(() => {

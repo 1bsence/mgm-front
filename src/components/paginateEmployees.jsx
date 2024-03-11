@@ -97,4 +97,4 @@ const Pagination = ({
     </div>
   );
 };
-export default Pagination;
+export default paginateEmployees;
