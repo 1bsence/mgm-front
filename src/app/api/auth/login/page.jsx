@@ -29,6 +29,7 @@ function Login() {
         redirect("/");
       }
     }
+    console.log(endpoint);
   }, [loggedIn, emailError, passsError]);
 
   function handleSignUp() {}
