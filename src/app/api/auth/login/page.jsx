@@ -13,7 +13,7 @@ const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
 const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
 
 const endpoint =
-  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
+  process.env.NEXT_PUBLIC_NODE_ENV === "development" ? local_endpoint : production_endpoint;
 const app_url =
   process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
