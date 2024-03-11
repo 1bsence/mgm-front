@@ -24,7 +24,6 @@ export default function Employee() {
       return localStorage.getItem("userData") || null;
     }
   });
-  var orgid = loggedIn ? JSON.parse(loggedIn).organization.id : null;
   const [error, setError] = useState(null);
   useEffect(() => {
     fetch(endpoint + "/employee/seeall", {
@@ -32,7 +31,7 @@ export default function Employee() {
       headers: {
         accept: "application/json",
       },
-      body: JSON.stringify({ id: orgid }),
+      body: JSON.stringify({ id: JSON.parse(loggedIn).organization.id }),
     })
       .then((res) => res.json())
       .then((data) => {

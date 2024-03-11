@@ -75,8 +75,7 @@ export default function NavBar() {
         redirect("/api/auth/login");
       }
     }
-    console.log(currUser.roles);
-  }, [loggedOut, error]);
+  }, [loggedOut, error, currUser]);
 
   if (display === " hidden") {
     return null;
