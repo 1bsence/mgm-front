@@ -3,8 +3,13 @@
 
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("userData") || null;
