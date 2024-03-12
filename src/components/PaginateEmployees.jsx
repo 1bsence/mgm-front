@@ -13,6 +13,13 @@ const PaginateEmployees = ({
   seeChangingEmployee,
 }) => {
   const pagesCount = Math.ceil(items.length / pageSize);
+  const [display, setDisplay] = useState(() => {
+    if (pagesCount > 1) {
+      return "flex";
+    } else {
+      return "hidden";
+    }
+  });
   return (
     <div>
       <div className="overflow-auto sm:min-h-[32rem]">
@@ -53,7 +60,7 @@ const PaginateEmployees = ({
             })}
         </ul>
       </div>
-      <div className="flex flex-row justify-center items-center">
+      <div className={"flex-row justify-center items-center " + display}>
         <button
           className="btn-style rounded-md"
           onClick={() => {

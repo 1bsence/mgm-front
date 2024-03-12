@@ -38,6 +38,12 @@ const navigation_items = [
     path: "/",
     permmision: "Employee",
   },
+  {
+    name: "Test",
+    icon: homeIcon,
+    path: "/test",
+    permmision: "Employee",
+  },
   // {
   //   name: "Project",
   //   icon: workingIcon,
@@ -146,7 +152,7 @@ function navigationList(items, currUser) {
               </Link>
             </li>
           );
-        } else if (currUser.employee.roles.includes(item.permmision)) {
+        } else if (currUser?.employee?.roles?.includes(item.permmision)) {
           return (
             <li className="my-6 mx-2" key={index}>
               <Link className="no-underline" href={item.path}>

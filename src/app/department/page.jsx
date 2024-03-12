@@ -238,7 +238,7 @@ export default function Department() {
         return data;
       }
     });
-    fetch(endpoint + "/department/read", {
+    fetch(endpoint + "department/seeall", {
       method: "POST",
       headers: {
         accept: "application/json",
@@ -246,9 +246,6 @@ export default function Department() {
       body: JSON.stringify({
         organization: {
           id: loggedIn ? JSON.parse(loggedIn).organization.id : null,
-        },
-        department: {
-          id: "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
         },
       }),
     })
