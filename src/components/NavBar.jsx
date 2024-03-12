@@ -72,6 +72,9 @@ export default function NavBar() {
   const [error, setError] = useState(null);
 var currUser = null;
 useEffect(() => {
+  if (loggedIn) {
+    currUser = JSON.parse(loggedIn);
+  }
   if (loggedOut) {
     if (typeof window !== "undefined") {
       localStorage.removeItem("userData");
@@ -82,11 +85,18 @@ useEffect(() => {
 if (display === " hidden") {
   return null;
 }
-currUser = JSON.parse(loggedIn);
-  if (router.isFallback || !loggedIn) {
-    return <div className="flex flex-col items-center justify-center"><h1>Loading...</h1>
-    <p>If too much passes... please refreh the page {"<"} 3</p></div>;
+if (loggedIn) {
+  currUser = JSON.parse(loggedIn);
+} else {
+  if (router.isFallback) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <h1>Loading...</h1>
+        <p>If too much passes... please refreh the page {"<"} 3</p>
+      </div>
+    );
   }
+}
 return (
   <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-foreground to-text-secondary bg-opacity-60 text-black">
     <div className="w-10 h-14 md:w-10/12 md:h-36">

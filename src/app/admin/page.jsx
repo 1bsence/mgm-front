@@ -21,8 +21,7 @@ export default function Home() {
   useEffect(() => {
   }, [loggedIn, error]);
   const router = useRouter();
-  currUser = JSON.parse(loggedIn);
-  if (router.isFallback || !currUser) {
+  if (router.isFallback || !loggedIn) {
     return (
       <div className="flex flex-col items-center justify-center">
         Loading...
