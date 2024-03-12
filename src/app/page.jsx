@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center my-52">
       HOME PAGE
-      <h1 className="flex flex-wrap">{JSON.stringify(loggedIn)}</h1>
+      <h1 className="flex flex-wrap">home</h1>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function SignUpPage() {
   }, [loggedIn, error]);
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="h-100 rounded-lg shadow-lg">
+      <div className="h-100 rounded-lg shadow-lg bg-foreground">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
@@ -65,9 +65,13 @@ export default function SignUpPage() {
                 },
                 body: JSON.stringify({ organization, employee }),
               }).catch((error) => console.error(error));
-              req.then((res) => {
-                if (!res.ok) {
-                  setError(res.statusText);
+              req.then((response) => {
+                if (response.ok) {
+                  response.json().then((data) => {
+                    setLoggedIn(JSON.stringify(data));
+                  });
+                } else {
+                  setLoggedIn(res.data);
                 }
               });
             })

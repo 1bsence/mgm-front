@@ -35,13 +35,12 @@ function Login() {
         redirect("/");
       }
     }
-    console.log(endpoint);
   }, [loggedIn, emailError, passsError]);
 
   function handleSignUp() {}
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="  h-100 rounded-lg shadow-lg">
+      <div className="  h-100 rounded-lg shadow-md shadow-glow-type1 bg-foreground">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />

@@ -36,8 +36,8 @@ const EditEmployeeBox = ({ employee, showEmployeeEditBox }) => {
   }, [loggedIn, error]);
 
   return (
-    <div className="p-2">
-      <h1 className="flex flex-row justify-center">
+    <div className="fixed top-40 left-1/3 md:left-1/2 w-80 h-52 py-2 px-4 bg-background rounded-lg shadow-2xl shadow-glow-type1 border-[0.5px] border-glow-type2">
+      <h1 className="flex flex-row justify-cente my-1">
         Edit {employee.name} permissions
       </h1>
       <form
@@ -70,6 +70,7 @@ const EditEmployeeBox = ({ employee, showEmployeeEditBox }) => {
           return (
             <div key={index}>
               <input
+                className="accent-button-normal hover:accent-glow-type2"
                 type="checkbox"
                 name={role}
                 value={role}
@@ -86,16 +87,21 @@ const EditEmployeeBox = ({ employee, showEmployeeEditBox }) => {
                   }
                 }}
               />
-              <label htmlFor={role}>{role}</label>
+              <label className="mx-2" htmlFor={role}>
+                {role}
+              </label>
             </div>
           );
         })}
         <div className="flex flex-row justify-evenly my-4">
-          <button type="submit" className="btn-style rounded-md shadow-md">
+          <button
+            type="submit"
+            className="btn-style rounded-md shadow-md hover:bg-glow-type1 hover:border-glow-type1 hover:shadow-glow-type1"
+          >
             Submit
           </button>
           <button
-            className="btn-style rounded-md shadow-md"
+            className="btn-style rounded-md shadow-md hover:bg-glow-type3 hover:border-glow-type3 hover:shadow-glow-type3"
             onClick={() => {
               showEmployeeEditBox(null);
             }}

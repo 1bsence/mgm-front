@@ -9,6 +9,7 @@ import employeeIcon from "@/public/icons/employee_icon.svg";
 import loginICon from "@/public/icons/login_icon.svg";
 import logoutIcon from "@/public/icons/logout.svg";
 import workingIcon from "@/public/icons/working_icon.svg";
+import departmentIcon from "@/public/icons/department_icon.svg";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
@@ -42,12 +43,12 @@ const navigation_items = [
   //   path: "/project",
   //   permmision: "Administrator",
   // },
-  {
-    name: "Departments",
-    icon: employeeIcon,
-    path: "/department",
-    permmision: "Administrator",
-  },
+  // {
+  //   name: "Departments",
+  //   icon: departmentIcon,
+  //   path: "/department",
+  //   permmision: "Administrator",
+  // },
   {
     name: "Employees",
     icon: employeeIcon,
@@ -60,15 +61,20 @@ export default function NavBar() {
   const router = useRouter();
   const pathName = usePathname();
   const display = pathName.includes("api/auth") ? " hidden" : " block";
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("userData") || null;
+    }
+  });
 
   const [loggedOut, setLoggedOut] = useState(null);
   const [error, setError] = useState(null);
-  const currUser = loggedIn ? JSON.parse(loggedIn).employee : null;
+
   useEffect(() => {
     setLoggedIn(() => {
       if (typeof window !== "undefined") {
-        return localStorage.getItem("userData") || null;
+        const data = localStorage.getItem("userData") || null;
+        return data;
       }
     });
     if (loggedOut) {
@@ -77,17 +83,17 @@ export default function NavBar() {
         redirect("/api/auth/login");
       }
     }
-  }, [loggedOut, error, currUser]);
-
+  }, [loggedOut, error]);
+  const currUser = loggedIn ? JSON.parse(loggedIn).employee : null;
   if (display === " hidden") {
     return null;
   }
 
-  if (router.isFallback) {
+  if (router.isFallback || !currUser) {
     return <div>Loading...</div>;
   }
   return (
-    <nav className="h-screen w-14 md:w-36 sticky left-0 top-0">
+    <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-foreground to-text-secondary bg-opacity-60 text-black">
       <div className="w-10 h-14 md:w-10/12 md:h-36">
         <div className="flex flex-row  justify-center items-center md:p-2">
           <Image src={logoimg} priority alt="logo" width={70} className="" />
@@ -100,7 +106,7 @@ export default function NavBar() {
 
       <div name="ORG SECTION">
         <h4 className=" md:block hidden mx-2">Organization</h4>
-        {/* {navigationList(navigation_items, currUser)} */}
+        {navigationList(navigation_items, currUser)}
       </div>
       <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
     </nav>

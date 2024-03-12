@@ -22,7 +22,7 @@ const PaginateEmployees = ({
             .map((employee, index) => {
               return (
                 <li key={index} className="mx-2 my-3">
-                  <div className="flex flex-row items-center justify-between rounded-md shadow-md px-2 min-h-20">
+                  <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20 bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
                     <div className="flex flex-row">
                       <Image
                         src={proilePic}

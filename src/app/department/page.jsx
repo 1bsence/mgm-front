@@ -228,14 +228,16 @@ const department = {
   ],
 };
 export default function Department() {
-  const [loggedIn, setLoggedIn] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("userData") || null;
-    }
-  });
+  const [loggedIn, setLoggedIn] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
   useEffect(() => {
+    setLoggedIn(() => {
+      if (typeof window !== "undefined") {
+        const data = localStorage.getItem("userData") || null;
+        return data;
+      }
+    });
     fetch(endpoint + "/department/read", {
       method: "POST",
       headers: {

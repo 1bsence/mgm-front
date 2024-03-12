@@ -32,7 +32,7 @@ export default function EmployeeSignUpPage() {
   useEffect(() => {}, [userData, emailError, passsError]);
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg">
+      <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg bg-foreground">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
@@ -120,7 +120,7 @@ export default function EmployeeSignUpPage() {
             name="pass2word"
             placeholder="Repeat Password"
           />
-          <button className={"btn-style" + "rounded-md"} type="submit">
+          <button className={"btn-style " + " rounded-md"} type="submit">
             SignUp
           </button>
         </form>

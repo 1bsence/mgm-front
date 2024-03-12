@@ -16,32 +16,36 @@ const app_url =
   process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
 export default function Employee() {
+  var currUser = null;
   const [employeeEDit, setEmployeeEdit] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("userData") || null;
+      return data;
+    }
+  });
   const [error, setError] = useState(null);
   useEffect(() => {
-    setLoggedIn(() => {
-      if (typeof window !== "undefined") {
-        return localStorage.getItem("userData") || null;
-      }
-    });
-    fetch(endpoint + "/employee/seeall", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      body: JSON.stringify({ id: JSON.parse(loggedIn).organization.id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setEmployees(data);
-      });
+    currUser = loggedIn ? JSON.parse(loggedIn) : null;
+    if (currUser) {
+      fetch(endpoint + "/employee/seeall", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: JSON.stringify({ id: currUser.organization.id }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setEmployees(data);
+        });
+    }
     if (!loggedIn) {
       redirect("/api/auth/login");
     }
-  }, [loggedIn, error, employeeEDit]);
+  }, [loggedIn, error, employeeEDit, currUser]);
 
   const pageSize = 10;
   const onPageChange = (page) => {
@@ -53,12 +57,10 @@ export default function Employee() {
   return (
     <div>
       {employeeEDit && (
-        <div className="fixed top-40 left-1/3 md:left-1/2 w-80 h-52 bg-primary  border-colorful-accent border-opacity-65 border-2 rounded-md">
           <EditEmployeeBox
             employee={employeeEDit}
             showEmployeeEditBox={onEmployeeEdit}
           />
-        </div>
       )}
       <PaginateEmployees
         items={employees}

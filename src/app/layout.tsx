@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-roboto font-medium bg-primary text-secondary flex flex-wrap">
+      <body className="font-roboto font-medium bg-background text-text-normal flex flex-wrap">
         <NavBar />
         <main className="flex-1">{children}</main>
         <Analytics />
