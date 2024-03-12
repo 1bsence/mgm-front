@@ -20,12 +20,18 @@ function handleSignUp() {}
 export default function SignUpPage() {
   const [error, setError] = useState(false);
   const [loggedIn, setLoggedIn] = useState(null);
+
+
   useEffect(() => {
     if (loggedIn) {
-      localStorage.setItem("userData", JSON.stringify(loggedIn));
-      redirect("/");
+      if (typeof window !== "undefined") {
+        console.log("Setting local storage", loggedIn);
+        localStorage.setItem("userData", loggedIn);
+        redirect("/");
+      }
     }
   }, [loggedIn, error]);
+
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
       <div className="h-100 rounded-lg shadow-lg bg-foreground">
@@ -33,7 +39,8 @@ export default function SignUpPage() {
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
-          <h3 className="flex justify-center">Return of MGM</h3>
+          <h3 className="flex justify-center text-lg">Return of MGM</h3>
+          <h5 className="flex justify-center text-sm text-text-darken">Signup Organization</h5>
         </div>
 
         <form

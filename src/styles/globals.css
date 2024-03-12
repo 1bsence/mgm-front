@@ -18,7 +18,7 @@
 }
 
 .list-style-item {
-    @apply rounded-md shadow-md flex flex-row items-center justify-center md:justify-start md:px-1 my-4 w-full h-8
+    @apply rounded-md shadow-md flex flex-row items-center justify-evenly md:justify-start md:px-2 my-4 w-full h-8 hover:border-glow-type1 hover:border-[0.5px] hover:bg-background
 }
 
 @tailwind utilities;

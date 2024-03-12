@@ -12,9 +12,6 @@ export default function Home() {
       return localStorage.getItem("userData") || null;
     }
   });
-  const [loggedOut, setLoggedOut] = useState(() => {
-    return loggedIn === null ? true : false;
-  });
   const [error, setError] = useState(null);
   useEffect(() => {
     if (!loggedIn) {
@@ -22,8 +19,8 @@ export default function Home() {
     }
   }, [loggedIn, error]);
   const router = useRouter();
-  if (router.isFallback) {
-    return <div className="flex flex-col items-center justify-center">Loading...</div>;
+  if (router.isFallback || !loggedIn) {
+    return <div className="h-full w-full flex flex-col items-center justify-center">Loading...</div>;
   }
   return (
     <div className="flex flex-col items-center my-52">

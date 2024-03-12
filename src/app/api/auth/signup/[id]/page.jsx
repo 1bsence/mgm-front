@@ -23,13 +23,22 @@ export default function EmployeeSignUpPage() {
   const orgID = pathname.split("/")[4];
   const orgName = searchParams.get("name");
 
-  const [userData, setUserData] = useState(() => {
-    const userData = localStorage.getItem("userData");
-    return userData ? JSON.parse(userData) : null;
-  });
   const [emailError, setEmaiilError] = useState(false);
   const [passsError, setPassError] = useState(false);
-  useEffect(() => {}, [userData, emailError, passsError]);
+  const [loggedIn, setLoggedIn] = useState(null);
+
+  useEffect(() => {
+    if (loggedIn) {
+      if (typeof window !== "undefined") {
+        console.log("Setting local storage", loggedIn);
+        localStorage.setItem("userData", loggedIn);
+        redirect("/");
+      }
+    }
+  }, [loggedIn, emailError, passsError]);
+
+
+
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
       <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg bg-foreground">
@@ -70,10 +79,9 @@ export default function EmployeeSignUpPage() {
                 setEmaiilError(true);
               });
               req.then((res) => {
-                if (res) {
+                if (res.ok) {
                   res.json().then((data) => {
-                    setUserData(data);
-                    console.log(data);
+                    setLoggedIn(JSON.stringify(data));
                   });
                 } else {
                   if (res) {
