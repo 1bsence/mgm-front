@@ -23,7 +23,7 @@ export default function Home() {
   }, [loggedIn, error]);
   const router = useRouter();
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div className="flex flex-col items-center justify-center">Loading...</div>;
   }
   return (
     <div className="flex flex-col items-center my-52">
