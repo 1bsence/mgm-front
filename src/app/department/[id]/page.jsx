@@ -180,7 +180,7 @@ const DepManagersList = (employees) => {
           <h1 className="px-2">Select Manager:</h1>
           <select
             onSubmit={() => {
-              console.log("submitting");++
+              console.log("submitting");
             }}
             className="bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px] rounded-md"
           >
