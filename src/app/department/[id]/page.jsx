@@ -167,7 +167,7 @@ export default function Page() {
 }
 const DepManagersList = (employees) => {
   const managers = [];
-  console.log(employees.em);
+  console.log(employees.employees);
   employees.employees.map((emp) => {
     if (emp.roles.includes("Department Manager")) {
       managers.push(emp);
@@ -175,17 +175,30 @@ const DepManagersList = (employees) => {
   });
   return (
     <div>
-      {managers.map((manager, index) => {
-        return (
-          <li key={index} className="mx-2 my-3 min-w-96">
-            <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20  bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
-              <div className="felx felx-row items-center justify-evenly mx-2">
-                <h3 className="text-base">{manager.name}</h3>
-              </div>
-            </div>
-          </li>
-        );
-      })}
+      {managers.length > 0 && (
+        <div className="flex flex-row items-center justify-center">
+          <h1 className="px-2">Select Manager:</h1>
+          <select
+            onSubmit={() => {
+              console.log("submitting");++
+            }}
+            className="bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px] rounded-md"
+          >
+            {managers.map((manager, index) => (
+              <option key={index} value={manager.id}>
+                {manager.name}
+              </option>
+            ))}
+          </select>
+          <button type="submit">Submit</button>
+        </div>
+      )}
+      {managers.length < 1 && (
+        <div className="flex flex-col items-center justify-center">
+          <h1>No Managers Found</h1>
+          <p>Try appointing a employee to department manager first?</p>
+        </div>
+      )}
     </div>
   );
 };
