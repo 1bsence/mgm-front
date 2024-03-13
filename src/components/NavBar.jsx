@@ -1,7 +1,7 @@
 "use client";
 
 import logoimg from "@/public/logo-black-removebg-preview.png";
-
+import { Suspense } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import homeIcon from "@/public/icons/home_icon.svg";
@@ -38,24 +38,24 @@ const navigation_items = [
     path: "/",
     permmision: "Employee",
   },
-  {
-    name: "Test",
-    icon: homeIcon,
-    path: "/test",
-    permmision: "Employee",
-  },
+  // {
+  //   name: "Test",
+  //   icon: homeIcon,
+  //   path: "/test",
+  //   permmision: "Employee",
+  // },
   // {
   //   name: "Project",
   //   icon: workingIcon,
   //   path: "/project",
   //   permmision: "Administrator",
   // },
-  // {
-  //   name: "Departments",
-  //   icon: departmentIcon,
-  //   path: "/department",
-  //   permmision: "Administrator",
-  // },
+  {
+    name: "Departments",
+    icon: departmentIcon,
+    path: "/department",
+    permmision: "Administrator",
+  },
   {
     name: "Employees",
     icon: employeeIcon,
@@ -76,65 +76,67 @@ export default function NavBar() {
 
   const [loggedOut, setLoggedOut] = useState(null);
   const [error, setError] = useState(null);
-var currUser = null;
-useEffect(() => {
+  var currUser = null;
+  useEffect(() => {
+    if (loggedIn) {
+      currUser = JSON.parse(loggedIn);
+    }
+    if (loggedOut) {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("userData");
+        redirect("/api/auth/login");
+      }
+    }
+  }, [loggedOut, error, loggedIn]);
+  if (display === " hidden") {
+    return null;
+  }
   if (loggedIn) {
     currUser = JSON.parse(loggedIn);
-  }
-  if (loggedOut) {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("userData");
-      redirect("/api/auth/login");
+  } else {
+    if (router.isFallback) {
+      return (
+        <div className="flex flex-col items-center justify-center">
+          <h1>Loading...</h1>
+          <p>If too much passes... please refreh the page {"<"} 3</p>
+        </div>
+      );
     }
   }
-}, [loggedOut, error, loggedIn]);
-if (display === " hidden") {
-  return null;
-}
-if (loggedIn) {
-  currUser = JSON.parse(loggedIn);
-} else {
-  if (router.isFallback) {
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <h1>Loading...</h1>
-        <p>If too much passes... please refreh the page {"<"} 3</p>
+  return (
+    <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-foreground to-text-secondary bg-opacity-60 text-black">
+      <div className="w-10 h-14 md:w-10/12 md:h-36">
+        <div className="flex flex-row  justify-center items-center md:p-2">
+          <Image src={logoimg} priority alt="logo" width={70} className="" />
+
+          <h3 className="text-2xl md:block hidden">MGM</h3>
+        </div>
       </div>
-    );
-  }
-}
-return (
-  <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-foreground to-text-secondary bg-opacity-60 text-black">
-    <div className="w-10 h-14 md:w-10/12 md:h-36">
-      <div className="flex flex-row  justify-center items-center md:p-2">
-        <Image src={logoimg} priority alt="logo" width={70} className="" />
 
-        <h3 className="text-2xl md:block hidden">MGM</h3>
+      <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
+
+      <div name="ORG SECTION">
+        <h4 className=" md:block hidden mx-2">Organization</h4>
+        <Suspense fallback={<div>Loading...</div>}>
+          {navigationList(navigation_items, currUser)}
+        </Suspense>
       </div>
-    </div>
+      <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
+      <div name="ACCOUNT SECTION">
+        <h4 className=" md:block hidden mx-2">Account</h4>
 
-    <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
-
-    <div name="ORG SECTION">
-      <h4 className=" md:block hidden mx-2">Organization</h4>
-      {navigationList(navigation_items, currUser)}
-    </div>
-    <hr name="BREAKING POINT" className="bg-chill-accent mx-2 h-1" />
-    <div name="ACCOUNT SECTION">
-      <h4 className=" md:block hidden mx-2">Account</h4>
-
-      <button
-        onClick={() => {
-          setLoggedOut(true);
-        }}
-        className="list-style-item"
-      >
-        <Image src={logoutIcon} alt="logout" width={30} />
-        <h4 className="hidden md:block">Logout</h4>
-      </button>
-    </div>
-  </nav>
-);
+        <button
+          onClick={() => {
+            setLoggedOut(true);
+          }}
+          className="list-style-item"
+        >
+          <Image src={logoutIcon} alt="logout" width={30} />
+          <h4 className="hidden md:block">Logout</h4>
+        </button>
+      </div>
+    </nav>
+  );
 }
 
 function navigationList(items, currUser) {

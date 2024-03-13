@@ -13,13 +13,6 @@ const PaginateEmployees = ({
   seeChangingEmployee,
 }) => {
   const pagesCount = Math.ceil(items.length / pageSize);
-  const [display, setDisplay] = useState(() => {
-    if (pagesCount > 1) {
-      return "flex";
-    } else {
-      return "hidden";
-    }
-  });
   return (
     <div>
       <div className="overflow-auto sm:min-h-[32rem]">
@@ -60,47 +53,51 @@ const PaginateEmployees = ({
             })}
         </ul>
       </div>
-      <div className={"flex-row justify-center items-center " + display}>
-        <button
-          className="btn-style rounded-md"
-          onClick={() => {
-            onPageChange(1);
-          }}
+      {pagesCount > 1 && (
+        <div
+          className={"flex flex-row justify-center bg-glow-type3 items-center"}
         >
-          <h1>{"<<"}</h1>
-        </button>
-        <button
-          className="mx-4 btn-style rounded-md"
-          onClick={() => {
-            if (currentPage <= pagesCount && currentPage > 1) {
-              onPageChange(currentPage - 1);
-            }
-          }}
-        >
-          <h1>-</h1>
-        </button>
-        <div className="mx-2">
-          <h1>{currentPage}</h1>
+          <button
+            className="btn-style rounded-md"
+            onClick={() => {
+              onPageChange(1);
+            }}
+          >
+            <h1>{"<<"}</h1>
+          </button>
+          <button
+            className="mx-4 btn-style rounded-md"
+            onClick={() => {
+              if (currentPage <= pagesCount && currentPage > 1) {
+                onPageChange(currentPage - 1);
+              }
+            }}
+          >
+            <h1>-</h1>
+          </button>
+          <div className="mx-2">
+            <h1>{currentPage}</h1>
+          </div>
+          <button
+            className="mx-4 btn-style rounded-md"
+            onClick={() => {
+              if (currentPage < pagesCount && currentPage >= 1) {
+                onPageChange(currentPage + 1);
+              }
+            }}
+          >
+            <h1>+</h1>
+          </button>
+          <button
+            className="btn-style rounded-md"
+            onClick={() => {
+              onPageChange(pagesCount);
+            }}
+          >
+            <h1>{">>"}</h1>
+          </button>
         </div>
-        <button
-          className="mx-4 btn-style rounded-md"
-          onClick={() => {
-            if (currentPage < pagesCount && currentPage >= 1) {
-              onPageChange(currentPage + 1);
-            }
-          }}
-        >
-          <h1>+</h1>
-        </button>
-        <button
-          className="btn-style rounded-md"
-          onClick={() => {
-            onPageChange(pagesCount);
-          }}
-        >
-          <h1>{">>"}</h1>
-        </button>
-      </div>
+      )}
     </div>
   );
 };

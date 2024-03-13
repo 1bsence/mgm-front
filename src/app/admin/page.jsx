@@ -18,23 +18,26 @@ export default function Home() {
     return loggedIn === null ? true : false;
   });
   const [error, setError] = useState(null);
-  useEffect(() => {
-  }, [loggedIn, error]);
+  useEffect(() => {}, [loggedIn, error]);
   const router = useRouter();
-  if (router.isFallback || !loggedIn) {
-    return (
-      <div className="flex flex-col items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
+
   if (!loggedIn) {
     redirect("/api/auth/login");
   }
-  return (
-    <div className="flex flex-col items-center my-52 px-3">
-      <h1>ADMIN PAGE</h1>
-      <h1>{`Employee SIGNUP URL->  ${app_url}/api/auth/signup/${currUser?.organization?.id}?name=${currUser?.organization?.name}`}</h1>
-    </div>
-  );
+  if (router.isFallback || !loggedIn) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex flex-col items-center my-52 px-3">
+        <h1>ADMIN PAGE</h1>
+        <h1>{`Employee SIGNUP URL->  ${app_url}/api/auth/signup/${
+          JSON.parse(loggedIn).organization?.id
+        }?name=${JSON.parse(loggedIn)?.organization?.name}`}</h1>
+      </div>
+    );
+  }
 }

@@ -3,300 +3,189 @@
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import profileImg from "@/public/logo-black-removebg-preview.png";
 import "@/styles/globals.css";
+import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import profileImg from "@/public/logo-black-removebg-preview.png";
+import editIcon from "@/public/icons/edit_square_FILL0.svg";
+import EditDepartmentBox from "@/components/EditDepartmentBox";
 
-const department = {
-  id: "5badadsa-d4fe-4a65-b137-ab8dkfakdg",
-  name: "Java",
-  manager: {
-    name: "Chuck Norris",
-    id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-  },
-  skills: [],
-  employees: [
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-      name: "ionut",
-      email: "ionut@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
-      name: "ionut",
-      email: "bbb@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
-      name: "ionut",
-      email: "ccc@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-      name: "ionut",
-      email: "ionut@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
-      name: "ionut",
-      email: "bbb@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
-      name: "ionut",
-      email: "ccc@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-      name: "ionut",
-      email: "ionut@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
-      name: "ionut",
-      email: "bbb@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
-      name: "ionut",
-      email: "ccc@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-      name: "ionut",
-      email: "ionut@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
-      name: "ionut",
-      email: "bbb@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
-      name: "ionut",
-      email: "ccc@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-ab80a2d9b3da",
-      name: "ionut",
-      email: "ionut@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-adgfe-4a65-b137-ab80xaadgb3da",
-      name: "ionut",
-      email: "bbb@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-    {
-      id: "5d9b4a73-d4fe-4a65-b137-zxckfalkdsgd",
-      name: "ionut",
-      email: "ccc@gmail.com",
-      password: "mypass",
-      role: "employee",
-      skills: [],
-      rights: {
-        id: "employee",
-        canDoEverything: "true",
-      },
-      projects: [],
-      department: "Java",
-    },
-  ],
-};
+const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
+const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
+const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
+const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
+
+const endpoint =
+  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
+const app_url =
+  process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
 export default function Page() {
-  const [loggedIn, setLoggedIn] = useState();
+  const [depManagersList, setDepManagersList] = useState();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [department, setDepartment] = useState();
+  // const [hasPermission, SetHasPermission] = useState(false);
   const [error, setError] = useState(null);
+  const [currUser, setCurrUser] = useState();
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("userData") || null;
+    }
+  });
+
+  const [employees, setEmployees] = useState();
+  const router = useRouter();
   useEffect(() => {
-    setLoggedIn(() => {
-      if (typeof window !== "undefined") {
-        return localStorage.getItem("userData") || null;
-      }
-    });
+    if (loggedIn) {
+      fetch(endpoint + "/department/read", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          organization: {
+            id: JSON.parse(loggedIn).organization.id,
+          },
+          department: {
+            id: pathname.split("/")[2],
+          },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setDepartment(data);
+        });
+      fetch(endpoint + "/employee/searchbydepartment", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          organization: JSON.parse(loggedIn).organization.id,
+          department: searchParams.get("name"),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setEmployees(data);
+        });
+    }
+
     if (!loggedIn) {
       redirect("/api/auth/login");
+    } else {
+      setCurrUser(JSON.parse(loggedIn));
     }
   }, [loggedIn, error]);
-  if(!department){
-    return <div>loading...</div>
-  }
-  return (
-    <div className="flex flex-col items-center">
-      <div
-        name="department info container"
-        className="bg-white text-black w-3/4 rounded-md shadow-md px-3 flex flex-row justify-between"
-      >
-        <h1>{department?.name}</h1>
-        <div className="flex flex-row justify-center space-x-2">
-          <h3>Employees:</h3>
-          <h3>+</h3>
-          <h3>{department?.employees.length}</h3>
-          <h1> - </h1>
-        </div>
-      </div>
-      <div
-        name="manager info container"
-        className="bg-primary text-secondary w-11/12 px-3 py-1 my-5 rounded-md shadow-md"
-      >
-        <div className="flex flex-col items-center">
-          <Image
-            priority
-            src={profileImg}
-            alt="Mangager profile image"
-            width={50}
-          />
-          <h1>{department?.manager.name}</h1>
-          <hr className="h-1 w-3/4 shadow-md bg-accent2" />
-        </div>
-        <div name="employee container" className="bg-primary overflow-hidden">
-          <div className="flex flex-row items-center justify-between px-5">
-            <h1>Employees:</h1> <h1>Manage</h1>
-          </div>
-          {show_Employees(department?.employees)}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function show_Employees(employees) {
+  var hasPermission = false;
+  if (currUser) {
+    if (
+      !(
+        currUser.employee.roles?.includes("Administrator") ||
+        currUser.employee.roles?.includes("Department Manager")
+      )
+    ) {
+      console.log("You do not have permission to view this page");
+      console.log(currUser);
+      redirect("/");
+    } else {
+      console.log("You have permission to view this page");
+      console.log(currUser);
+    }
+  }
+
+  if (router.isFallback || !loggedIn || !department) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        ADD MANAGER!!
+        {department.manager && <DepManagersList employees={employees} />}
+      </div>
+
+      // <div className="py-5">
+      //   {department && (
+      //     <div className="flex flex-col justify-evenly items-center">
+      //       {department?.name}
+      //       {department.manager && (
+      //         <h1>
+      //           Manager: {department?.manager?.name || department?.manager?.id}
+      //         </h1>
+      //       )}
+      //     </div>
+      //   )}
+      //   <div className="flex flex-row justify-between bg-foreground px-4 rounded-sm+ shadow-md">
+      //     <h1>EMPLOYEES:</h1>
+      //     <button type="button">
+      //       <div className="flex +flex-row justify-center">
+      //         <h1 className="mx-2">Edit </h1>
+      //         <Image src={editIcon} alt="add employee" width={20} />
+      //       </div>
+      //     </button>
+      //   </div>
+      //   {employees &&
+      //     (console.log(employees),
+      //     (
+      //       <div className="px-2">
+      //         <ul>
+      //           {employees.map((emp, key) => (
+      //             <li key={key} className="mx-2 my-3">
+      //               <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20 bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
+      //                 <div className="flex flex-row">
+      //                   <Image
+      //                     src={profileImg}
+      //                     priority
+      //                     alt="employee"
+      //                     width={50}
+      //                     height={50}
+      //                   />
+      //                   <div className="felx felx-col items-center justify-start mx-2">
+      //                     <h3 className="text-base">{emp.name}</h3>
+      //                     {emp?.skills.lenght > 0 && (
+      //                       <h3 className="text-sm text-opacity-60">
+      //                         {emp?.skills?.map((skill) => skill.name)}
+      //                       </h3>
+      //                     )}
+      //                   </div>
+      //                 </div>
+      //                 <div></div>
+      //               </div>
+      //             </li>
+      //           ))}
+      //         </ul>
+      //       </div>
+      //     ))}
+      // </div>
+    );
+  }
+}
+const DepManagersList = (employees) => {
+  const managers = [];
+  console.log(employees.em);
+  employees.employees.map((emp) => {
+    if (emp.roles.includes("Department Manager")) {
+      managers.push(emp);
+    }
+  });
   return (
-    <div className="w-full  max-h-96 overflow-auto ">
-      <ul className="flex flex-col md:grid md:grid-cols-2 md:grid-flow-row px-4 md:items-cente md:justify-between">
-        {department?.employees.map((employee) => (
-          <li key={employee.id} className="">
-            <div className="rounded-md shadow-md m-2 mx-2 px-2 items-center w-34 lg:min-w-80 flex flex-row justify-between md:min-w-60 ">
-              <Image priority src={profileImg} alt="profile image" width={40} />
-              <h1>{employee.name}</h1>
-              <h1>Woking Hours: 2/3</h1>
+    <div>
+      {managers.map((manager, index) => {
+        return (
+          <li key={index} className="mx-2 my-3 min-w-96">
+            <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20  bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
+              <div className="felx felx-row items-center justify-evenly mx-2">
+                <h3 className="text-base">{manager.name}</h3>
+              </div>
             </div>
           </li>
-        ))}
-      </ul>
+        );
+      })}
     </div>
   );
-}
+};
