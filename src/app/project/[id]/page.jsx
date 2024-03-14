@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { redirect } from "next/navigation";
+import { redirect,usePathname,useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import PaginateProject from "@/components/PaginateProject";
@@ -20,7 +20,8 @@ const app_url =
 
 export default function Project() {
   const router = useRouter();
-
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [projects, setProjects] = useState();
   const [showCreateProjectBox, setShowCreateProjectBox] = useState(false);
   const [loggedIn, setLoggedIn] = useState(() => {
@@ -36,12 +37,12 @@ export default function Project() {
 
   useEffect(() => {
     if (loggedIn) {
-      fetch(endpoint + "/project/seeall", {
+      fetch(endpoint + "/project/read", {
         method: "POST",
         headers: {
           accept: "application/json",
         },
-        body: JSON.stringify({ id: JSON.parse(loggedIn).organization.id }),
+        body: JSON.stringify({organization:{ id: JSON.parse(loggedIn).organization.id},project:{id:pathname.split("/")[2] }}),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -67,20 +68,7 @@ export default function Project() {
   } else {
     return (
       <div className="p-5 w-min:100 h-screen overflow-auto">
-        <PaginateProject
-          items={projects}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          onPageChange={onPageChange}
-          showCreateProject={ToggleShowCreateProject}
-        />
-        {showCreateProjectBox && (
-          <div>
-            <CreateProjectBox
-              showCreateProject={ToggleShowCreateProject}
-            />
-          </div>
-        )}
+        {projects.name}
       </div>
     );
   }
