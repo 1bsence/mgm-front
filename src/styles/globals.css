@@ -6,11 +6,11 @@
 @tailwind components;
 
 .btn-style {
-    @apply w-20 h-8 px-2 py-1 border-[0.5px] hover:border-glow-type1 border-opacity-60 bg-button-normal shadow-sm shadow-glow-type1 hover:shadow-inner  hover:bg-background hover:text-text-normal text-text-darken;
+    @apply w-20 h-8 px-2 py-1 border-[0.5px] hover:border-glow-type1 border-opacity-60 bg-button-normal shadow-sm shadow-glow-type1 hover:shadow-inner  hover:bg-bgbackground hover:text-text-normal text-text-darken;
 }
 
 .input-field-style {
-    @apply rounded-md shadow-lg hover:shadow-inner px-2 py-1 w-48 h-8 focus:outline-none focus:ring-2 bg-background text-text-normal focus:bg-button-normal focus:text-text-darken;
+    @apply rounded-md shadow-lg hover:shadow-inner px-2 py-1 w-48 h-8 focus:outline-none focus:ring-2 bg-bgbackground text-text-normal focus:bg-button-normal focus:text-text-darken;
 } 
 
 .form-style {
@@ -18,7 +18,7 @@
 }
 
 .list-style-item {
-    @apply rounded-md shadow-md flex flex-row items-center justify-evenly md:justify-start md:px-2 my-4 w-full h-8 hover:border-glow-type1 hover:border-[0.5px] hover:bg-background
+    @apply rounded-md shadow-md flex flex-row items-center justify-evenly md:justify-start md:px-2 my-4 w-full h-8 hover:border-glow-type1 hover:border-[0.5px] hover:bg-bgbackground
 }
 
 @tailwind utilities;

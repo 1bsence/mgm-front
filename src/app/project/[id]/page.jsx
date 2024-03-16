@@ -1,12 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { redirect,usePathname,useSearchParams } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import PaginateProject from "@/components/PaginateProject";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import CreateProjectBox from "@/components/CreateProjectBox";
 
 const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
 const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
@@ -23,43 +19,43 @@ export default function Project() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [projects, setProjects] = useState();
-  const [showCreateProjectBox, setShowCreateProjectBox] = useState(false);
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       const data = localStorage.getItem("userData") || null;
       return data;
     }
   });
-  const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
-
-  const pageSize = 10;
 
   useEffect(() => {
     if (loggedIn) {
-      fetch(endpoint + "/project/read", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-        },
-        body: JSON.stringify({organization:{ id: JSON.parse(loggedIn).organization.id},project:{id:pathname.split("/")[2] }}),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setProjects(data);
+      const getProjectslist = async () => {
+        const formData = {
+          organization: { id: JSON.parse(loggedIn).organization.id },
+          project: { id: pathname.split("/")[2] },
+        };
+        await fetch(`${endpoint}/project/read`, {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+          },
+          body: JSON.stringify(formData)
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setProjects(data);
+            })
+            .catch((error) => {
+              setError(error);
+            }),
         });
+      };
     } else if (!loggedIn) {
       redirect("/api/auth/login");
     }
   }, [loggedIn, error]);
-
-  const onPageChange = (page) => {
-    setCurrentPage(page);
-  };
-  const ToggleShowCreateProject = (show) => {
-    setShowCreateProjectBox(show);
-  };
-  if (router.isFallback || !loggedIn || !projects) {
+  console.log(projects);
+  if (router.isFallback || !loggedIn) {
     return (
       <div className="flex flex-col items-center justify-center">
         <h1>Loading...</h1>
@@ -67,9 +63,7 @@ export default function Project() {
     );
   } else {
     return (
-      <div className="p-5 w-min:100 h-screen overflow-auto">
-        {projects.name}
-      </div>
+      <div className="p-5 w-min:100 h-screen overflow-auto">Project Page</div>
     );
   }
 }

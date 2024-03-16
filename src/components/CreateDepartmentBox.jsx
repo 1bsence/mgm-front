@@ -30,7 +30,7 @@ const CreateDepartmentBox = ({ showCreateDepartment }) => {
 
   return (
     <div>
-      <div className="fixed top-40 left-1/3 md:left-1/2 w-80 h-52 py-2 px-4 bg-background rounded-lg shadow-2xl shadow-glow-type1 border-[0.5px] border-glow-type2">
+      <div className="fixed top-40 left-1/3 md:left-1/2 w-80 h-52 py-2 px-4 bg-bgbackground rounded-lg shadow-2xl shadow-glow-type1 border-[0.5px] border-glow-type2">
         <div>
           <h1 className="flex flex-row justify-center my-1">
             Create Department
@@ -67,6 +67,9 @@ const CreateDepartmentBox = ({ showCreateDepartment }) => {
               });
           }}
         >
+          <label htmlFor="name" className="text-xs">
+            Input the name without spaces
+          </label>
           <input
             className="input-field-style w-full h-10 my-2 border-glow-type1 border-[0.5px]"
             required={true}

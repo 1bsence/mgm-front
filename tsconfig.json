@@ -21,7 +21,6 @@
       "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
       "@/public/*": ["./public/*"],
-      "@/libs/*": ["./src/app/libs/*"],
       "@/auth/*": ["./src/api/auth/*"],
       "@/api/*": ["./src/api/*"],
       "@/auth-syles/*": ["./src/api/auth/styles/*"],

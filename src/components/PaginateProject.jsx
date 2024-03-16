@@ -37,7 +37,7 @@ const PaginateProject = ({
             .map((prj, index) => {
               return (
                 <li key={index} className="mx-2 my-3 min-w-96">
-                  <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20  bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
+                  <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20  bg-bgforeground hover:bg-bgbackground hover:border-glow-type1 hover:border-[0.5px]">
                     <div className="felx felx-row items-center justify-evenly mx-2">
                       <div>
                         <h3 className="text-base">{prj.name}</h3>

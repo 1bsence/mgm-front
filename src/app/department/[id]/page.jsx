@@ -21,13 +21,13 @@ const app_url =
   process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 
 export default function Page() {
-  const [depManagersList, setDepManagersList] = useState();
+  const url_params = useSearchParams();
+  const [depEmployeeList, setDepEmployeeList] = useState([]);
+  const [showDepEdit, setShowDepEedit] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [department, setDepartment] = useState();
-  // const [hasPermission, SetHasPermission] = useState(false);
   const [error, setError] = useState(null);
-  const [currUser, setCurrUser] = useState();
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("userData") || null;
@@ -54,40 +54,27 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data, "department data");
           setDepartment(data);
         });
-      fetch(endpoint + "/employee/searchbydepartment", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-        },
-        body: JSON.stringify({
-          organization: JSON.parse(loggedIn).organization.id,
-          department: searchParams.get("name"),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setEmployees(data);
-        });
     }
-
     if (!loggedIn) {
       redirect("/api/auth/login");
-    } else {
-      setCurrUser(JSON.parse(loggedIn));
     }
-  }, [loggedIn, error]);
+  }, [loggedIn]);
 
-  var hasPermission = false;
-  if (currUser) {
+  const toggleShowDepEdit = () => {
+    setShowDepEedit(!showDepEdit);
+  };
+  if (loggedIn) {
     if (
       !(
-        currUser.employee.roles?.includes("Administrator") ||
-        currUser.employee.roles?.includes("Department Manager")
+        JSON.parse(loggedIn).employee.roles?.includes("Administrator") ||
+        JSON.parse(loggedIn).employee.roles?.includes("Department Manager")
       )
     ) {
       console.log("You do not have permission to view this page");
+      hasPermission = false;
       redirect("/");
     } else {
       console.log("You have permission to view this page");
@@ -101,137 +88,93 @@ export default function Page() {
     );
   } else {
     return (
-      <div>
-        {!department.manager.lenght < 2 && (
-          <DepManagersList employees={employees} />
-        )}
+      console.log(department),
+      (
+        <div>
+          {(department?.manager === " " ||
+            department?.manager === null ||
+            department?.manager?.lenght < 2) && <>DEP MAN LIST</>}
 
-        <div className="py-5">
-          {department && (
-            <div className="flex flex-col justify-evenly items-center">
-              {department?.name}
-              {department.manager && (
-                <h1>
-                  Manager:{" "}
-                  {department?.manager?.name || department?.manager?.id}
-                </h1>
+          <div className="py-5">
+            {department && (
+              <div className="flex flex-col justify-evenly items-center">
+                {searchParams.get("name") && (
+                  <h1>{searchParams.get("name")}</h1>
+                )}
+                {department.manager.lenght > 1 && (
+                  <h1>
+                    Manager:{" "}
+                    {department?.manager?.name || department?.manager?.id}
+                  </h1>
+                )}
+              </div>
+            )}
+            <div className="flex flex-row justify-between bg-bgforeground px-4 rounded-sm shadow-md">
+              <h1>EMPLOYEES:</h1>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDepEedit(true);
+                }}
+              >
+                <div className="flex flex-row justify-center">
+                  <h1 className="mx-2">Edit </h1>
+                  <Image src={editIcon} alt="add employee" width={20} />
+                </div>
+              </button>
+              {showDepEdit && (
+                <EditDepartmentBox
+                  showEditDepartment={toggleShowDepEdit}
+                  department={department}
+                />
               )}
             </div>
-          )}
-          <div className="flex flex-row justify-between bg-foreground px-4 rounded-sm+ shadow-md">
-            <h1>EMPLOYEES:</h1>
-            <button type="button">
-              <div className="flex +flex-row justify-center">
-                <h1 className="mx-2">Edit </h1>
-                <Image src={editIcon} alt="add employee" width={20} />
-              </div>
-            </button>
           </div>
-          {employees && (
-            <div className="px-2">
-              <ul>
-                {employees?.some((emp, key) => {
-                  emp.roles.includes("Employee") && (
-                    <li key={key} className="mx-2 my-3">
-                      <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20 bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
-                        <div className="flex flex-row">
-                          <Image
-                            src={profileImg}
-                            priority
-                            alt="employee"
-                            width={50}
-                            height={50}
-                          />
-                          <div className="felx felx-col items-center justify-start mx-2">
-                            <h3 className="text-base">{emp?.name}</h3>
-                            {emp?.skills.lenght > 0 && (
-                              <h3 className="text-sm text-opacity-60">
-                                {emp?.skills?.map((skill) => skill?.name)}
-                              </h3>
-                            )}
-                          </div>
-                        </div>
-                        <div></div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
+          <EmployeeLIst className="bg-bgforeground w-40 h-20" />
         </div>
-      </div>
+      )
     );
   }
 }
-const DepManagersList = (employees) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+const EmployeeLIst = () => {
+  const [depEmployeeList, setDepEmployeeList] = useState([]);
+  const url_params = useSearchParams();
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("userData") || null;
     }
   });
-  const managers = [];
-  employees.employees.map((emp) => {
-    if (emp.roles.includes("Department Manager")) {
-      managers.push(emp);
-    }
-  });
+  const formData = {
+    organization: JSON.parse(loggedIn).organization.id,
+    department: url_params.get("name"),
+  };
+  useEffect(() => {
+    const getEmp = () => {
+      fetch(endpoint + "/employee/searchbydepartment", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setDepEmployeeList(data);
+        });
+    };
+    getEmp();
+  }, []);
+
+  console.log(depEmployeeList, "from employee list");
   return (
     <div>
-      {managers.length > 0 && (
-        <div className="flex flex-row items-center justify-center">
-          <h1 className="px-2">Select Manager:</h1>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("submitting");
-              try {
-                fetch(endpoint + "/department/modify", {
-                  method: "POST",
-                  headers: {
-                    accept: "application/json",
-                  },
-                  body: JSON.stringify({
-                    organization: {
-                      id: JSON.parse(loggedIn).organization.id,
-                    },
-                    department: {
-                      id: pathname.split("/")[2],
-                      name: searchParams.get("name"),
-                      manager: e.target[0].value,
-                      skills: [],
-                      employees: [],
-                    },
-                  }),
-                })
-                  .then((res) => res.json())
-                  .then((data) => {
-                    console.log(data);
-                  });
-              } catch (err) {
-                console.log(err);
-              }
-            }}
-          >
-            <select className="bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px] rounded-md">
-              {managers.map((manager, index) => (
-                <option key={index} value={manager.id}>
-                  {manager.name}
-                </option>
-              ))}
-            </select>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      )}
-      {managers.length < 1 && (
-        <div className="flex flex-col items-center justify-center">
-          <h1>No Managers Found</h1>
-          <p>Try appointing a employee to department manager first?</p>
-        </div>
-      )}
+      {depEmployeeList.map((emp, index) => {
+        return (
+          <div key={index}>
+            <h1>{emp.name}</h1>
+          </div>
+        );
+      })}
     </div>
   );
 };

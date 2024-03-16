@@ -1,14 +1,15 @@
-
+const {nextui} = require("@nextui-org/react");
 const config= {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     colors: {
-      "background":"#113C55",
-      "foreground":"#7CB4B8",
+      "bgbackground":"#113C55",
+      "bgforeground":"#7CB4B8",
       "text":{
         "normal": "#F7F7F7",
         "secondary": "#A3A3A3",
@@ -34,6 +35,7 @@ const config= {
     },
     extend: {
     }
-  }
+  },
+  plugins: [nextui()],
 };
 export default config;

@@ -56,7 +56,7 @@ export default function Department() {
     setCurrentPage(page);
   };
   const ToggleShowCreateDepartamnet = (show) => {
-    setShowCreateDepartmentBox(show);
+    setShowCreateDepartmentBox(show); 
   };
   if (router.isFallback || !loggedIn || !departments) {
     return (
