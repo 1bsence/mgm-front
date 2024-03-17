@@ -41,7 +41,7 @@ export default function EmployeeSignUpPage() {
 
   return (
     <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="bg-primary text-secondary h-100 rounded-lg shadow-lg bg-foreground">
+      <div className="bg-bgprimary text-secondary h-100 rounded-lg shadow-lg bg-bgforeground">
         <div className="rounded-md flex flex-col justify-center">
           <div className="flex justify-center">
             <Image src={logoImg} alt="logo" width={60} height={60} priority />

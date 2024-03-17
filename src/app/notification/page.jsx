@@ -13,7 +13,7 @@ const endpoint =
 const app_url =
   process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
 export default function Page() {
-  const [notifications, setNotifications] = useState(null);
+  const [notifications, setNotifications] = useState([]);
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("userData") || null;
@@ -50,79 +50,39 @@ export default function Page() {
       user.then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            console.log(data);
-            inter(data);
+            setNotifications(data.employee.notifications);
           });
         } else {
           console.log(
             "There was a problem with the fetch operation: " + error.message
           );
+          return (
+            <h1>
+              There was a problem with the fetch operation: {error.message}
+            </h1>
+          );
         }
       });
     }
-  }, [loggedIn, error, inter2]);
+  }, [loggedIn, error]);
   const router = useRouter();
-  const inter = (data) => {
-    console.log(data.employee.notifications, "data");
-  };
 
-  if (loggedIn) {
-    const formdata = {
-      email: JSON.parse(loggedIn).employee.email,
-      password: JSON.parse(loggedIn).employee.password,
-    };
-    const user = fetch(endpoint + "/login", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      body: JSON.stringify(formdata),
-    }).catch(function (error) {
-      console.log(
-        "There was a problem with the fetch operation: " + error.message
-      );
-    });
-    user.then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          console.log(data.employee.notifications, "187234861278381232199");
-          return (
-            <div>
-              <ul>
-                {data.employee.notifications.map((notification, key) => {
-                  return (
-                    <li key={key}>
-                      <div key={notification.id}>
-                        caca
-                        <p>{notification.message}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        });
-      } else {
-        console.log(
-          "There was a problem with the fetch operation: " + error.message
-        );
-        return (
-          <h1>There was a problem with the fetch operation: {error.message}</h1>
-        );
-      }
-    });
-  }
   return (
     <div>
-      <ul className="text-text-normal bg-foreground">
-        caca
-        {inter2 &&
-          inter2.map((notification, index) => (
-            <li key={notification.id}>
+      <ul name="NOTIFICATIONS LIST">
+        {notifications &&
+          notifications.map((notification, index) => (
+            <li
+              key={notification.id}
+              className="flex flex-row justify-between items-center px-2 py-2 border-b-2 border-glow-type1 bg-bgbackground hover:bg-glow-type1 transition-all duration-300 ease-in-out"
+            >
               <div>
-                caca
                 <p>{notification.message}</p>
+              </div>
+              <div className="flex flex-row justify-evenly items-center">
+                <button className="btn-style">DISSMIS</button>
+                <button className="btn-style">ACCEPT</button>
+                <button className="btn-style">REJECT</button>
               </div>
             </li>
           ))}
@@ -130,76 +90,3 @@ export default function Page() {
     </div>
   );
 }
-
-const ListNotification = () => {
-  var inter = [];
-  const [loggedIn, setLoggedIn] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("userData") || null;
-    }
-  });
-  if (loggedIn) {
-    const formdata = {
-      email: JSON.parse(loggedIn).employee.email,
-      password: JSON.parse(loggedIn).employee.password,
-    };
-    const user = fetch(endpoint + "/login", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      body: JSON.stringify(formdata),
-    }).catch(function (error) {
-      console.log(
-        "There was a problem with the fetch operation: " + error.message
-      );
-    });
-    user.then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          console.log(data.employee.notifications, "187234861278381232199");
-          inter = data.employee.notifications;
-          return (
-            <div>
-              <ul>
-                {data.employee.notifications.map((notification, key) => {
-                  return (
-                    <li key={key}>
-                      <div key={notification.id}>
-                        caca
-                        <p>{notification.message}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        });
-      } else {
-        console.log(
-          "There was a problem with the fetch operation: " + error.message
-        );
-        return (
-          <h1>There was a problem with the fetch operation: {error.message}</h1>
-        );
-      }
-    });
-  }
-  return (
-    <div>
-      <ul>
-        {inter.map((notification, key) => {
-          return (
-            <li key={key}>
-              <div key={notification.id}>
-                caca
-                <p>{notification.message}</p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
