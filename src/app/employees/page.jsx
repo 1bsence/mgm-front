@@ -6,15 +6,8 @@ import PaginateEmployees from "../../components/PaginateEmployees.jsx";
 import EditEmployeeBox from "../../components/EditEmployeeBox.jsx";
 import { useRouter } from "next/navigation";
 
-const local_endpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
-const production_endpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
-const local_app_url = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
-const production_app_url = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
-
-const endpoint =
-  process.env.NODE_ENV === "development" ? local_endpoint : production_endpoint;
-const app_url =
-  process.env.NODE_ENV === "development" ? local_app_url : production_app_url;
+const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
+const app_url = process.env.NEXT_PUBLIC_APP_URL;
 
 export default function Employee() {
   const router = useRouter();

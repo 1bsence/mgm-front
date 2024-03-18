@@ -16,15 +16,8 @@ import workingIcon from "@/public/icons/working_icon.svg";
 import departmentIcon from "@/public/icons/department_icon.svg";
 import notificationIcon from "@/public/icons/notifications_FILL0.svg";
 
-const apiURL =
-  process.env.NODE_ENV === "development"
-    ? process.env.NEXT_PUBLIC_LOCAL_ENDPOINT
-    : process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
-
-const url =
-  process.env.NODE_ENV === "development"
-    ? process.env.NEXT_PUBLIC_LOCAL_APP_URL
-    : process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
+const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
+const app_url = process.env.NEXT_PUBLIC_APP_URL;
 
 const navigationItemsOrganization = [
   {
@@ -80,7 +73,7 @@ export default function NavBar() {
         email: currUser.employee.email,
         password: currUser.employee.password,
       };
-      fetch(apiURL + "/login", {
+      fetch(endpoint + "/login", {
         method: "POST",
         headers: {
           accept: "application/json",

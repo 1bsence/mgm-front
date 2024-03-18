@@ -7,15 +7,8 @@ import "@/styles/globals.css";
 import editIcon from "@/public/icons/edit_square_FILL0.svg";
 // import EditProjectBox from "@/components/EditProjectBox";
 
-const localEndpoint = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT;
-const productionEndpoint = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT;
-const localAppUrl = process.env.NEXT_PUBLIC_LOCAL_APP_URL;
-const productionAppUrl = process.env.NEXT_PUBLIC_PRODUCTION_APP_URL;
-
-const endpoint =
-  process.env.NODE_ENV === "development" ? localEndpoint : productionEndpoint;
-const appUrl =
-  process.env.NODE_ENV === "development" ? localAppUrl : productionAppUrl;
+const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
+const app_url = process.env.NEXT_PUBLIC_APP_URL;
 
 export default function Project() {
   const router = useRouter();
