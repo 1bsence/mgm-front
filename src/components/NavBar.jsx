@@ -14,6 +14,7 @@ import logoutIcon from "@/public/icons/logout.svg";
 import shieldPerson from "@/public/icons/shield_person.svg";
 import workingIcon from "@/public/icons/working_icon.svg";
 import departmentIcon from "@/public/icons/department_icon.svg";
+import notificationIcon from "@/public/icons/notifications_FILL0.svg";
 
 const apiURL =
   process.env.NODE_ENV === "development"
@@ -38,12 +39,12 @@ const navigationItemsOrganization = [
     path: "/",
     permission: "Employee",
   },
-  {
-    name: "Project",
-    icon: workingIcon,
-    path: "/project",
-    permission: "Administrator",
-  },
+  // {
+  //   name: "Project",
+  //   icon: workingIcon,
+  //   path: "/project",
+  //   permission: "Administrator",
+  // },
   {
     name: "Departments",
     icon: departmentIcon,
@@ -57,7 +58,6 @@ const navigationItemsOrganization = [
     permission: "Administrator",
   },
 ];
-
 
 export default function NavBar() {
   const router = useRouter();
@@ -124,6 +124,8 @@ export default function NavBar() {
 
   currUser = JSON.parse(loggedIn);
   var path = pathName.split("/")[1];
+
+  
   return (
     <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-bgforeground to-text-secondary bg-opacity-60 text-black">
       <div className="w-10 h-14 md:w-10/12 md:h-24">
@@ -161,7 +163,7 @@ export default function NavBar() {
               }
               color="success"
             >
-              <Image src={loginIcon} alt="notificationIcon" width={30} />
+              <Image src={notificationIcon} alt="notificationIcon" width={30} />
               <h4 className="hidden md:block">Notifications</h4>
             </Badge>
           </button>

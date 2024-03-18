@@ -118,7 +118,7 @@ export default function Page() {
                 }}
               >
                 <div className="flex flex-row justify-center">
-                  <h1 className="mx-2">Edit </h1>
+                  <h1 className="mx-2 hidden sm:block">Edit </h1>
                   <Image src={editIcon} alt="add employee" width={20} />
                 </div>
               </button>
