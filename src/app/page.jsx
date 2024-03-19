@@ -25,7 +25,10 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center my-52">
       HOME PAGE
-      <h1 className="flex flex-wrap">home</h1>
+      <p className="p-4">
+        Becase we lacked knowledge, some changes require a full page refreh, if
+        you dont see anything changed, please press <b>CTRL + R</b>
+      </p>
     </div>
   );
 }

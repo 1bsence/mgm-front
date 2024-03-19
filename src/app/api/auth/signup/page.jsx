@@ -4,6 +4,7 @@ import logoImg from "@/public/logo-black-removebg-preview.png";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import "@/styles/globals.css";
+import { redirect } from "next/navigation";
 
 const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
 const app_url = process.env.NEXT_PUBLIC_APP_URL;
@@ -14,13 +15,12 @@ export default function SignUpPage() {
   const [error, setError] = useState(false);
   const [loggedIn, setLoggedIn] = useState(null);
 
-
   useEffect(() => {
     if (loggedIn) {
       if (typeof window !== "undefined") {
         console.log("Setting local storage", loggedIn);
         localStorage.setItem("userData", loggedIn);
-        redirect("/");
+        redirect("/api/auth/login");
       }
     }
   }, [loggedIn, error]);
@@ -33,7 +33,9 @@ export default function SignUpPage() {
             <Image src={logoImg} alt="logo" width={60} height={60} priority />
           </div>
           <h3 className="flex justify-center text-lg">Return of MGM</h3>
-          <h5 className="flex justify-center text-sm text-text-darken">Signup Organization</h5>
+          <h5 className="flex justify-center text-sm text-text-darken">
+            Signup Organization
+          </h5>
         </div>
 
         <form

@@ -15,6 +15,7 @@ import shieldPerson from "@/public/icons/shield_person.svg";
 import workingIcon from "@/public/icons/working_icon.svg";
 import departmentIcon from "@/public/icons/department_icon.svg";
 import notificationIcon from "@/public/icons/notifications_FILL0.svg";
+import openiInNew from "@/public/icons/open_in_new_icon.svg";
 
 const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
 const app_url = process.env.NEXT_PUBLIC_APP_URL;
@@ -32,12 +33,12 @@ const navigationItemsOrganization = [
     path: "/",
     permission: "Employee",
   },
-  // {
-  //   name: "Project",
-  //   icon: workingIcon,
-  //   path: "/project",
-  //   permission: "Administrator",
-  // },
+  {
+    name: "TeamRoles",
+    icon: openiInNew,
+    path: "/TeamRoles",
+    permission: "Administrator",
+  },
   {
     name: "Departments",
     icon: departmentIcon,
@@ -53,27 +54,29 @@ const navigationItemsOrganization = [
 ];
 
 export default function NavBar() {
+  const [notifications, setNotifications] = useState([]);
+  const [loggedOut, setLoggedOut] = useState(null);
+  const [error, setError] = useState(null);
   const router = useRouter();
   const pathName = usePathname();
+  var path = pathName.split("/")[1];
   const display = pathName.includes("api/auth") ? "hidden" : "block";
   const [loggedIn, setLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("userData") || null;
     }
   });
-  const [notifications, setNotifications] = useState([]);
-  const [loggedOut, setLoggedOut] = useState(null);
-  const [error, setError] = useState(null);
+
   let currUser = null;
 
   useEffect(() => {
     if (loggedIn) {
       currUser = JSON.parse(loggedIn);
       const formdata = {
-        email: currUser.employee.email,
-        password: currUser.employee.password,
+        organization: currUser.organization.id,
+        id: currUser.employee.id,
       };
-      fetch(endpoint + "/login", {
+      fetch(`${endpoint}/employee/seenotifications`, {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -83,7 +86,8 @@ export default function NavBar() {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
-              setNotifications(data.employee.notifications);
+              console.log(data, " new notifications data navbar");
+              setNotifications(data);
             });
           }
         })
@@ -92,13 +96,6 @@ export default function NavBar() {
             "There was a problem with the fetch operation: " + error.message
           );
         });
-    }
-
-    if (loggedOut) {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("userData");
-        router.push("/api/auth/login");
-      }
     }
   }, [loggedOut, error, loggedIn]);
 
@@ -114,11 +111,7 @@ export default function NavBar() {
       </div>
     );
   }
-
   currUser = JSON.parse(loggedIn);
-  var path = pathName.split("/")[1];
-
-  
   return (
     <nav className="h-screen w-14 md:w-36 sticky left-0 top-0 bg-gradient-to-tr from-bgforeground to-text-secondary bg-opacity-60 text-black">
       <div className="w-10 h-14 md:w-10/12 md:h-24">

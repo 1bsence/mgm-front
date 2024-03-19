@@ -86,7 +86,7 @@ export default function Page() {
         <div>
           {(department?.manager === " " ||
             department?.manager === null ||
-            department?.manager?.lenght < 2) && <>DEP MAN LIST</>}
+            department?.manager?.lenght < 2) && <DepManagersList />}
 
           <div className="py-5">
             {department && (
@@ -168,6 +168,111 @@ const EmployeeLIst = () => {
           </div>
         );
       })}
+    </div>
+  );
+};
+const DepManagersList = (department) => {
+  const [depEmployeeList, setDepEmployeeList] = useState([]);
+  const url_params = useSearchParams();
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("userData") || null;
+    }
+  });
+  const formData = {
+    organization: JSON.parse(loggedIn).organization.id,
+    department: url_params.get("name"),
+  };
+  useEffect(() => {
+    const getEmp = () => {
+      fetch(endpoint + "/employee/searchbydepartment", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setDepEmployeeList(data);
+        });
+    };
+    getEmp();
+    console.log(depEmployeeList, "from employee list");
+  }, []);
+  const managers = [];
+  depEmployeeList.map((emp) => {
+    if (emp.roles.includes("Department Manager")) {
+      managers.push(emp);
+    }
+  });
+  return (
+    <div>
+      {managers.map((manager, index) => {
+        return (
+          <li key={index} className="mx-2 my-3 min-w-96">
+            <div className="flex flex-row items-center justify-between rounded-md shadow-sm shadow-glow-type1 px-2 min-h-20  bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px]">
+              <div className="felx felx-row items-center justify-evenly mx-2">
+                <h3 className="text-base">{manager.name}</h3>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+      {managers.length > 0 && (
+        <div className="flex flex-row items-center justify-center">
+          <h1 className="px-2">Select Manager:</h1>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log({ id: e.target.vallue[0], name: e.target.value[1] });
+              console.log("submitting");
+              const formData = {
+                organization: {
+                  id: JSON.parse(loggedIn).organization.id,
+                },
+                department: {
+                  id: department.id,
+                  name: department.name,
+                  manager: { id: e.target.vallue[0], name: e.target.value[1] },
+                  skills: department.skills,
+                  employees: department.employees,
+                },
+              };
+              fetch(endpoint + "/department/modify", {
+                method: "POST",
+                headers: {
+                  accept: "application/json",
+                },
+                body: JSON.stringify(formData),
+              })
+                .catch((err) => {
+                  console.log(err);
+                })
+                .then((res) => {
+                  if (res.ok) {
+                    alert("Department Edited successful!");
+                  }
+                });
+            }}
+          >
+            <select className="bg-foreground hover:bg-background hover:border-glow-type1 hover:border-[0.5px] rounded-md">
+              {managers.map((manager, index) => (
+                <option key={index} value={[manager.id, manager.name]}>
+                  {manager.name}
+                </option>
+              ))}
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )}
+      {managers.length < 1 && (
+        <div className="flex flex-col items-center justify-center">
+          <h1>No Managers Found</h1>
+          <p>Try appointing a employee to department manager first?</p>
+        </div>
+      )}
     </div>
   );
 };

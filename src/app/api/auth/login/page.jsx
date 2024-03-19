@@ -10,6 +10,7 @@ import "@/styles/globals.css";
 
 const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
 const app_url = process.env.NEXT_PUBLIC_APP_URL;
+
 function Login() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [emailError, setEmaiilError] = useState(false);
