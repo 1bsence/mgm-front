@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@nextui-org/react";
@@ -70,6 +70,11 @@ export default function NavBar() {
   let currUser = null;
 
   useEffect(() => {
+    if (loggedOut) {
+      localStorage.removeItem("userData");
+      setLoggedIn(null);
+      redirect("/api/auth/login");
+    }
     if (loggedIn) {
       currUser = JSON.parse(loggedIn);
       const formdata = {
